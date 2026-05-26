@@ -41,19 +41,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // API calls: network-first with cache fallback
+  // API calls: Ignorar el Service Worker i deixar passar la petició a Internet
   if (url.hostname.includes('open-meteo.com')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, clone);
-          });
-          return response;
-        })
-        .catch(() => caches.match(request))
-    );
     return;
   }
 

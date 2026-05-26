@@ -538,13 +538,32 @@ async function loadApp(forceRefresh = false) {
   try {
     // Try cache first
     let data = null;
+    let expiredData = null;
+
     if (!forceRefresh) {
       data = getCachedData();
     }
 
+    // Si no tenim dades fresques, mirem si hi ha dades caducades per si falla la xarxa
     if (!data) {
-      data = await fetchWeatherData();
-      setCachedData(data);
+      try {
+        const cachedRaw = localStorage.getItem(CONFIG.cacheKey);
+        if (cachedRaw) {
+          expiredData = JSON.parse(cachedRaw).data;
+        }
+      } catch (e) { }
+
+      try {
+        data = await fetchWeatherData();
+        setCachedData(data);
+      } catch (err) {
+        if (expiredData) {
+          console.warn('Error de xarxa (ex. Too Many Requests). Fent servir dades de la memòria cau caducades.', err);
+          data = expiredData;
+        } else {
+          throw err;
+        }
+      }
     }
 
     renderApp(data);
