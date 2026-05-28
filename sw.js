@@ -3,7 +3,7 @@
    Offline caching strategy: Network-first
    ============================================ */
 
-const CACHE_NAME = 'el-tiempo-v4';
+const CACHE_NAME = 'el-tiempo-v5';
 const STATIC_ASSETS = [
   './',
   './index.html',
