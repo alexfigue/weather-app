@@ -32,14 +32,22 @@
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-size-xs: 0.6875rem;    /* 11px */
-  --font-size-sm: 0.75rem;      /* 12px */
-  --font-size-base: 0.875rem;   /* 14px */
-  --font-size-md: 1rem;         /* 16px */
-  --font-size-lg: 1.25rem;      /* 20px */
-  --font-size-xl: 1.5rem;       /* 24px */
-  --font-size-2xl: 2rem;        /* 32px */
-  --font-size-hero: 4.5rem;     /* 72px */
+  --font-size-xs: 0.6875rem;
+  /* 11px */
+  --font-size-sm: 0.75rem;
+  /* 12px */
+  --font-size-base: 0.875rem;
+  /* 14px */
+  --font-size-md: 1rem;
+  /* 16px */
+  --font-size-lg: 1.25rem;
+  /* 20px */
+  --font-size-xl: 1.5rem;
+  /* 24px */
+  --font-size-2xl: 2rem;
+  /* 32px */
+  --font-size-hero: 4.5rem;
+  /* 72px */
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -73,7 +81,9 @@
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -158,12 +168,21 @@ body.daytime {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse-opacity {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* --- Header --- */
@@ -271,8 +290,13 @@ body.daytime {
 }
 
 @keyframes float-glow {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(10%, 5%) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(10%, 5%) scale(1.1);
+  }
 }
 
 .current-weather__icon {
@@ -368,12 +392,29 @@ body.daytime {
   animation: fadeInUp 0.5s ease both;
 }
 
-.detail-item:nth-child(1) { animation-delay: 0.05s; }
-.detail-item:nth-child(2) { animation-delay: 0.1s; }
-.detail-item:nth-child(3) { animation-delay: 0.15s; }
-.detail-item:nth-child(4) { animation-delay: 0.2s; }
-.detail-item:nth-child(5) { animation-delay: 0.25s; }
-.detail-item:nth-child(6) { animation-delay: 0.3s; }
+.detail-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.detail-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.detail-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.detail-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.detail-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.detail-item:nth-child(6) {
+  animation-delay: 0.3s;
+}
 
 .detail-item__icon {
   width: 24px;
@@ -416,8 +457,13 @@ body.daytime {
   height: 28px;
 }
 
-.sun-times__icon--rise { color: var(--color-sun); }
-.sun-times__icon--set { color: #ff8c42; }
+.sun-times__icon--rise {
+  color: var(--color-sun);
+}
+
+.sun-times__icon--set {
+  color: #ff8c42;
+}
 
 .sun-times__info {
   display: flex;
@@ -616,11 +662,30 @@ body.daytime {
   font-weight: 600;
 }
 
-.aqi-badge--good { background: rgba(78, 205, 196, 0.2); color: var(--color-aqi-good); }
-.aqi-badge--moderate { background: rgba(255, 217, 61, 0.2); color: var(--color-aqi-moderate); }
-.aqi-badge--poor { background: rgba(255, 107, 107, 0.2); color: var(--color-aqi-poor); }
-.aqi-badge--very-poor { background: rgba(196, 77, 255, 0.2); color: var(--color-aqi-very-poor); }
-.aqi-badge--extreme { background: rgba(139, 0, 0, 0.2); color: var(--color-aqi-extreme); }
+.aqi-badge--good {
+  background: rgba(78, 205, 196, 0.2);
+  color: var(--color-aqi-good);
+}
+
+.aqi-badge--moderate {
+  background: rgba(255, 217, 61, 0.2);
+  color: var(--color-aqi-moderate);
+}
+
+.aqi-badge--poor {
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--color-aqi-poor);
+}
+
+.aqi-badge--very-poor {
+  background: rgba(196, 77, 255, 0.2);
+  color: var(--color-aqi-very-poor);
+}
+
+.aqi-badge--extreme {
+  background: rgba(139, 0, 0, 0.2);
+  color: var(--color-aqi-extreme);
+}
 
 .aqi-dot {
   width: 8px;
@@ -629,27 +694,49 @@ body.daytime {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-.aqi-badge--good .aqi-dot { background: var(--color-aqi-good); }
-.aqi-badge--moderate .aqi-dot { background: var(--color-aqi-moderate); }
-.aqi-badge--poor .aqi-dot { background: var(--color-aqi-poor); }
-.aqi-badge--very-poor .aqi-dot { background: var(--color-aqi-very-poor); }
-.aqi-badge--extreme .aqi-dot { background: var(--color-aqi-extreme); }
+.aqi-badge--good .aqi-dot {
+  background: var(--color-aqi-good);
+}
+
+.aqi-badge--moderate .aqi-dot {
+  background: var(--color-aqi-moderate);
+}
+
+.aqi-badge--poor .aqi-dot {
+  background: var(--color-aqi-poor);
+}
+
+.aqi-badge--very-poor .aqi-dot {
+  background: var(--color-aqi-very-poor);
+}
+
+.aqi-badge--extreme .aqi-dot {
+  background: var(--color-aqi-extreme);
+}
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }
 
 .aqi-bar {
   height: 6px;
   border-radius: 3px;
   background: linear-gradient(90deg,
-    var(--color-aqi-good) 0%,
-    var(--color-aqi-moderate) 25%,
-    var(--color-aqi-poor) 50%,
-    var(--color-aqi-very-poor) 75%,
-    var(--color-aqi-extreme) 100%
-  );
+      var(--color-aqi-good) 0%,
+      var(--color-aqi-moderate) 25%,
+      var(--color-aqi-poor) 50%,
+      var(--color-aqi-very-poor) 75%,
+      var(--color-aqi-extreme) 100%);
   position: relative;
   margin-bottom: var(--space-xl);
 }
@@ -664,7 +751,7 @@ body.daytime {
   border: 2px solid var(--color-bg-start);
   transform: translateX(-50%);
   transition: left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .pollutants-grid {
@@ -716,6 +803,7 @@ body.daytime {
     opacity: 0;
     transform: translateY(16px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -723,8 +811,13 @@ body.daytime {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
@@ -732,6 +825,7 @@ body.daytime {
     opacity: 0;
     transform: translateX(20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -900,6 +994,252 @@ body.daytime {
   justify-content: center;
 }
 
+/* ============================================
+   🌊 Marine Section Styles
+   ============================================ */
+
+/* --- Marine Section --- */
+.marine-section {
+  margin-bottom: var(--space-xl);
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* --- Marine Hero (Sea Temperature) --- */
+.marine-hero {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-xl);
+  margin-bottom: var(--space-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.marine-hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -20%;
+  right: -20%;
+  height: 50%;
+  background:
+    radial-gradient(ellipse at 25% 100%, rgba(0, 119, 182, 0.15), transparent 60%),
+    radial-gradient(ellipse at 75% 100%, rgba(72, 202, 228, 0.12), transparent 60%);
+  pointer-events: none;
+}
+
+.marine-hero__wave {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-md);
+  color: #48cae4;
+  position: relative;
+  z-index: 1;
+}
+
+.marine-hero__wave svg {
+  width: 100%;
+  height: 100%;
+  animation: wave-float 3s ease-in-out infinite;
+}
+
+@keyframes wave-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.marine-hero__temp {
+  font-size: 3.5rem;
+  font-weight: 200;
+  letter-spacing: -3px;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.marine-hero__temp sup {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0;
+  vertical-align: super;
+  opacity: 0.7;
+}
+
+.marine-hero__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.marine-hero__condition {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-top: var(--space-md);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.03em;
+}
+
+.marine-condition--optimal {
+  background: rgba(78, 205, 196, 0.2);
+  color: #4ecdc4;
+}
+
+.marine-condition--cool {
+  background: rgba(108, 180, 238, 0.2);
+  color: #6cb4ee;
+}
+
+.marine-condition--cold {
+  background: rgba(108, 180, 238, 0.25);
+  color: #90c9f9;
+}
+
+.marine-condition--warm {
+  background: rgba(255, 217, 61, 0.2);
+  color: #ffd93d;
+}
+
+.marine-condition--hot {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
+
+.marine-condition--unknown {
+  background: var(--color-surface);
+  color: var(--color-text-tertiary);
+}
+
+/* --- Marine Details Grid --- */
+.marine-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.marine-icon {
+  color: #0096c7 !important;
+}
+
+/* --- Marine Trend Chart --- */
+.marine-trend {
+  margin-bottom: var(--space-md);
+}
+
+.marine-trend__title {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+  font-weight: 500;
+}
+
+.marine-trend__chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 130px;
+  gap: var(--space-sm);
+  padding: 0 var(--space-xs);
+}
+
+.trend-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.trend-bar__value {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text-primary);
+}
+
+.trend-bar__fill {
+  width: 100%;
+  max-width: 28px;
+  min-height: 8px;
+  border-radius: var(--radius-sm) var(--radius-sm) 2px 2px;
+  background: linear-gradient(to top, #0077b6, #48cae4);
+  height: var(--bar-height, 50%);
+  transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0.85;
+}
+
+.trend-bar__fill:hover {
+  opacity: 1;
+  transform: scaleY(1.05);
+}
+
+.trend-bar__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-xs);
+}
+
+/* --- Marine Data Table --- */
+.marine-table-wrap {
+  overflow-x: auto;
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+}
+
+.marine-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.marine-table th {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.marine-table td {
+  padding: var(--space-sm) var(--space-md);
+  font-weight: 400;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.marine-table tbody tr:hover {
+  background: var(--color-surface);
+}
+
+.marine-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* --- Marine Source Footer --- */
+.marine-source {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) 0;
+  letter-spacing: 0.02em;
+}
+
 /* Utility: visually hidden */
 .sr-only {
   position: absolute;
@@ -908,7 +1248,7 @@ body.daytime {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
 }

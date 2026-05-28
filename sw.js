@@ -3,7 +3,7 @@
    Offline caching strategy: Network-first
    ============================================ */
 
-const CACHE_NAME = 'el-tiempo-v2';
+const CACHE_NAME = 'el-tiempo-v3';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -41,9 +41,16 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // API calls: Ignorar el Service Worker i deixar passar la petició a Internet
+  // API calls: Ignorar el Service Worker i deixar passar la petició
   if (url.hostname.includes('open-meteo.com')) {
     return;
+  }
+
+  // Backend local Flask (dades marines Copernicus)
+  if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
+    if (url.pathname.startsWith('/api/')) {
+      return;
+    }
   }
 
   // Google Fonts: cache-first

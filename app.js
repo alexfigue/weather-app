@@ -251,6 +251,14 @@ const DETAIL_ICONS = {
   location: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
 };
 
+// --- Marine Data Icons ---
+const MARINE_ICONS = {
+  wave: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>`,
+  salt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>`,
+  current: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M5 8l3-3M5 8l3 3"/><path d="M19 16H5M19 16l-3-3M19 16l-3 3"/></svg>`,
+  fish: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6-3.56 0-7.56-2.53-8.5-6z"/><circle cx="16" cy="12" r="1"/><path d="M2 12s2-2 3.5 0c1.5 2 3.5 0 3.5 0"/></svg>`,
+};
+
 // --- Main render function ---
 function renderApp(data) {
   const { weather, air } = data;
@@ -508,6 +516,9 @@ function renderApp(data) {
     <!-- Air Quality -->
     ${airHTML}
 
+    <!-- Marine Data (injected by fetchAndRenderMarine) -->
+    <div id="marine-container"></div>
+
     <!-- Last Updated -->
     <div class="last-updated" id="last-updated">
       Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
@@ -519,6 +530,186 @@ function renderApp(data) {
     localStorage.removeItem(CONFIG.cacheKey);
     loadApp(true);
   });
+}
+
+// --- Marine condition assessment (for tuna aquaculture) ---
+function getMarineConditionInfo(seaTemp) {
+  if (seaTemp == null) return { text: 'No disponible', class: 'unknown' };
+  if (seaTemp < 14) return { text: 'Aigua freda — vigilar atuns', class: 'cold' };
+  if (seaTemp < 18) return { text: 'Temperatura fresca', class: 'cool' };
+  if (seaTemp < 24) return { text: 'Condicions òptimes', class: 'optimal' };
+  if (seaTemp < 28) return { text: 'Aigua càlida — control O₂', class: 'warm' };
+  return { text: 'Temperatura elevada ⚠️', class: 'hot' };
+}
+
+// --- Fetch marine data (tries Flask backend, then static JSON) ---
+async function fetchMarineData() {
+  // 1. Intentem el backend Flask (desenvolupament local amb server.py)
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const response = await fetch('/api/marine', { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.status === 'ok') return data;
+    }
+  } catch (e) {
+    // Backend no disponible — provem fitxer estàtic
+  }
+
+  // 2. Intentem el fitxer estàtic (GitHub Pages / hosting estàtic)
+  try {
+    const response = await fetch('./marine_data.json');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.status === 'ok') return data;
+    }
+  } catch (e) {
+    // Fitxer estàtic tampoc disponible
+  }
+
+  return null;
+}
+
+// --- Render marine section ---
+function renderMarineSection(data) {
+  const container = document.getElementById('marine-container');
+  if (!container || !data || !data.current) return;
+
+  const c = data.current;
+  const seaTemp = c.sea_temperature;
+  const salinity = c.salinity;
+  const currentSpeed = c.current_speed;
+  const currentDir = c.current_direction_label || '--';
+  const conditionInfo = getMarineConditionInfo(seaTemp);
+
+  // --- Build 7-day temperature trend chart ---
+  let trendHTML = '';
+  if (data.daily && data.daily.length > 0) {
+    const temps = data.daily
+      .filter(d => d.sea_temperature != null)
+      .slice(-7);
+
+    if (temps.length > 1) {
+      const minT = Math.min(...temps.map(t => t.sea_temperature));
+      const maxT = Math.max(...temps.map(t => t.sea_temperature));
+      const range = maxT - minT || 1;
+
+      const barsHTML = temps.map((d, i) => {
+        const pct = ((d.sea_temperature - minT) / range) * 55 + 35;
+        const dateObj = new Date(d.date + 'T00:00:00');
+        const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
+        return `
+          <div class="trend-bar" style="animation-delay: ${i * 0.06}s">
+            <span class="trend-bar__value">${d.sea_temperature}°</span>
+            <div class="trend-bar__fill" style="--bar-height: ${pct}%"></div>
+            <span class="trend-bar__label">${dayLabel}</span>
+          </div>
+        `;
+      }).join('');
+
+      trendHTML = `
+        <div class="glass-card marine-trend">
+          <div class="marine-trend__title">Temperatura del mar — últims ${temps.length} dies</div>
+          <div class="marine-trend__chart">${barsHTML}</div>
+        </div>
+      `;
+    }
+  }
+
+  // --- Build daily salinity & currents table ---
+  let tableHTML = '';
+  if (data.daily && data.daily.length > 1) {
+    const rows = data.daily.slice(-7).map(d => {
+      const dateObj = new Date(d.date + 'T00:00:00');
+      const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
+      const dateLabel = `${dateObj.getDate()}/${dateObj.getMonth() + 1}`;
+      return `
+        <tr>
+          <td>${dayLabel} ${dateLabel}</td>
+          <td>${d.sea_temperature != null ? d.sea_temperature + '°' : '--'}</td>
+          <td>${d.salinity != null ? d.salinity : '--'}</td>
+          <td>${d.current_speed != null ? d.current_speed : '--'}</td>
+        </tr>
+      `;
+    }).join('');
+
+    tableHTML = `
+      <div class="glass-card marine-table-wrap">
+        <table class="marine-table">
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>Temp</th>
+              <th>Salinitat</th>
+              <th>Corrent</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // --- Render full marine section ---
+  container.innerHTML = `
+    <section class="marine-section" id="marine">
+      <h2 class="section-title">🌊 Estat del Mar</h2>
+
+      <!-- Sea Temperature Hero -->
+      <div class="glass-card marine-hero">
+        <div class="marine-hero__wave">${MARINE_ICONS.wave}</div>
+        <div class="marine-hero__temp">${seaTemp != null ? seaTemp : '--'}<sup>°C</sup></div>
+        <div class="marine-hero__label">Temperatura Superficial del Mar</div>
+        <div class="marine-hero__condition marine-condition--${conditionInfo.class}">
+          ${conditionInfo.text}
+        </div>
+      </div>
+
+      <!-- Marine Details Grid -->
+      <div class="glass-card marine-details">
+        <div class="detail-item">
+          <div class="detail-item__icon marine-icon">${MARINE_ICONS.salt}</div>
+          <div class="detail-item__value">${salinity != null ? salinity : '--'}</div>
+          <div class="detail-item__label">Salinitat PSU</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item__icon marine-icon">${MARINE_ICONS.current}</div>
+          <div class="detail-item__value">${currentSpeed != null ? currentSpeed : '--'} <small>m/s</small></div>
+          <div class="detail-item__label">Corrent ${currentDir}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item__icon marine-icon">${MARINE_ICONS.fish}</div>
+          <div class="detail-item__value">${seaTemp != null && seaTemp >= 18 && seaTemp <= 24 ? '✓ Bé' : '⚠ Alerta'}</div>
+          <div class="detail-item__label">Estat Gàbies</div>
+        </div>
+      </div>
+
+      <!-- Temperature Trend Chart -->
+      ${trendHTML}
+
+      <!-- Daily Data Table -->
+      ${tableHTML}
+
+      <!-- Source -->
+      <div class="marine-source">
+        Dades: Copernicus Marine Service · Actualitzat: ${data.last_updated
+      ? new Date(data.last_updated).toLocaleString('es-ES', {
+        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+      })
+      : '--'}
+      </div>
+    </section>
+  `;
+}
+
+// --- Fetch and render marine data (non-blocking) ---
+async function fetchAndRenderMarine() {
+  const data = await fetchMarineData();
+  if (data) {
+    renderMarineSection(data);
+  }
 }
 
 // --- Main load function ---
@@ -567,6 +758,9 @@ async function loadApp(forceRefresh = false) {
     }
 
     renderApp(data);
+
+    // Fetch marine data (non-blocking, from Flask backend)
+    fetchAndRenderMarine();
 
     // Hide loading screen
     loadingScreen.classList.add('hidden');

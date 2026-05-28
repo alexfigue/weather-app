@@ -1,0 +1,40 @@
+name: "\U0001F30A Actualitzar Dades Marines"
+
+# Quan s'executa:
+on:
+  schedule:
+    # Cada 5 hores (~5 cops al dia): 03:00, 08:00, 13:00, 18:00, 23:00 hora Madrid (UTC+2)
+    - cron: '0 1,6,11,16,21 * * *'
+  workflow_dispatch:
+    # Permet executar-lo manualment des de GitHub
+
+jobs:
+  update-marine-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "\U0001F4E5 Checkout repositori"
+        uses: actions/checkout@v4
+
+      - name: "\U0001F40D Configurar Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: "\U0001F4E6 Instal·lar dependències"
+        run: pip install copernicusmarine xarray netcdf4 pandas numpy
+
+      - name: "\U0001F4E1 Descarregar dades marines de Copernicus"
+        env:
+          COPERNICUSMARINE_SERVICE_USERNAME: ${{ secrets.COPERNICUS_USERNAME }}
+          COPERNICUSMARINE_SERVICE_PASSWORD: ${{ secrets.COPERNICUS_PASSWORD }}
+        run: python update_marine_data.py
+
+      - name: "\U0001F4BE Guardar i pujar canvis"
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add marine_data.json
+          # Només fa commit si hi ha canvis reals
+          git diff --staged --quiet || git commit -m "🌊 Dades marines actualitzades $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
