@@ -3,7 +3,7 @@
    Offline caching strategy: Network-first
    ============================================ */
 
-const CACHE_NAME = 'el-tiempo-v3';
+const CACHE_NAME = 'el-tiempo-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -69,10 +69,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets: cache-first
+  // Static assets: network-first (always get latest, fallback to cache offline)
   event.respondWith(
-    caches.match(request).then((cached) => {
-      return cached || fetch(request);
-    })
+    fetch(request)
+      .then((response) => {
+        // Save the fresh copy to cache for offline use
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(request, clone);
+        });
+        return response;
+      })
+      .catch(() => {
+        // Offline: serve from cache
+        return caches.match(request);
+      })
   );
 });
