@@ -1,11 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-<<<<<<< HEAD
-  "last_updated": "2026-05-28T09:34:04.932873+00:00",
-=======
-  "last_updated": "2026-05-28T12:31:58.003962+00:00",
->>>>>>> a25b1a7 (update: millores visuals KPI i blanc)
+  "last_updated": "2026-05-28T12:37:35.050445+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
