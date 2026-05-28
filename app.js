@@ -663,8 +663,8 @@ function createTempChart(data) {
     data: {
       labels,
       datasets: [
-        { data: Array(labels.length).fill(24), borderColor: 'rgba(78,205,196,0.3)', backgroundColor: 'rgba(78,205,196,0.12)', fill: 1, pointRadius: 0, borderWidth: 1, borderDash: [4, 4], label: '_zona_max' },
-        { data: Array(labels.length).fill(18), borderColor: 'rgba(78,205,196,0.3)', fill: false, pointRadius: 0, borderWidth: 1, borderDash: [4, 4], label: '_zona_min' },
+        { data: Array(labels.length).fill(24), borderColor: 'rgba(78,205,196,0.5)', backgroundColor: 'rgba(78,205,196,0.15)', fill: 1, pointRadius: 0, borderWidth: 1.5, borderDash: [4, 4], label: '_zona_max' },
+        { data: Array(labels.length).fill(18), borderColor: 'rgba(78,205,196,0.5)', fill: false, pointRadius: 0, borderWidth: 1.5, borderDash: [4, 4], label: '_zona_min' },
         { label: 'Superficie', data: daily.map(d => d.surface?.temperature ?? null), borderColor: chartColors.surf, tension: 0.3, fill: false, pointRadius: 3, borderWidth: 2 },
         { label: '10m', data: daily.map(d => d['10m']?.temperature ?? null), borderColor: chartColors.d10, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
         { label: '20m', data: daily.map(d => d['20m']?.temperature ?? null), borderColor: chartColors.d20, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
@@ -677,16 +677,16 @@ function createTempChart(data) {
         if (todayIdx < 0) return;
         const { ctx: c, scales: { x }, chartArea } = chart;
         const xPos = x.getPixelForValue(todayIdx);
-        c.save(); c.strokeStyle = 'rgba(255,255,255,0.25)'; c.lineWidth = 1; c.setLineDash([4, 4]);
+        c.save(); c.strokeStyle = 'rgba(0,0,0,0.3)'; c.lineWidth = 1; c.setLineDash([4, 4]);
         c.beginPath(); c.moveTo(xPos, chartArea.top); c.lineTo(xPos, chartArea.bottom); c.stroke(); c.restore();
       }
     }],
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { color: 'rgba(255,255,255,0.9)', font: { size: 10, family: 'Inter' }, filter: i => !i.text.startsWith('_'), usePointStyle: true, pointStyle: 'line' } } },
+      plugins: { legend: { labels: { color: '#1a1a2e', font: { size: 10, family: 'Inter' }, filter: i => !i.text.startsWith('_'), usePointStyle: true, pointStyle: 'line' } } },
       scales: {
-        x: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' } },
-        y: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.85)' } }
+        x: { ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' } }, grid: { color: 'rgba(0,0,0,0.1)' } },
+        y: { ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' } }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: '°C', color: '#1a1a2e', font: { weight: '600' } } }
       }
     }
   });
@@ -721,8 +721,8 @@ function createDepthChart(data) {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.x}°C a -${c.parsed.y}m` } } },
       scales: {
-        y: { reverse: true, min: 0, max: 35, ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 }, callback: v => `-${v}m` }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: 'Profundidad', color: 'rgba(255,255,255,0.85)' } },
-        x: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.85)' } }
+        y: { reverse: true, min: 0, max: 35, ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' }, callback: v => `-${v}m` }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: 'Profundidad', color: '#1a1a2e', font: { weight: '600' } } },
+        x: { ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' } }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: '°C', color: '#1a1a2e', font: { weight: '600' } } }
       }
     }
   });
