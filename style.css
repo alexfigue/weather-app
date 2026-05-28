@@ -25,7 +25,7 @@
   --color-rain: #6cb4ee;
   --color-snow: #e8e8ff;
   --color-aqi-good: #4ecdc4;
-  --color-aqi-moderate: #ffd93d;
+  --color-aqi-moderate: #e6b800;
   --color-aqi-poor: #ff6b6b;
   --color-aqi-very-poor: #c44dff;
   --color-aqi-extreme: #8b0000;
@@ -640,6 +640,22 @@ body.daytime {
   color: var(--color-text-tertiary);
 }
 
+/* --- High/Low Temperature Colors --- */
+.current-weather__high-low {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+
+.current-weather__high {
+  color: #ff6b6b;
+}
+
+.current-weather__low {
+  color: #40c9a2;
+}
+
 /* --- Air Quality Section --- */
 .air-quality-section {
   margin-bottom: var(--space-xl);
@@ -668,7 +684,7 @@ body.daytime {
 }
 
 .aqi-badge--moderate {
-  background: rgba(255, 217, 61, 0.2);
+  background: rgba(230, 184, 0, 0.2);
   color: var(--color-aqi-moderate);
 }
 
@@ -1283,11 +1299,11 @@ body.daytime {
   position: relative;
   height: 380px;
   background: linear-gradient(180deg,
-    rgba(72, 202, 228, 0.3) 0%,
-    rgba(0, 150, 199, 0.35) 25%,
-    rgba(0, 119, 182, 0.4) 50%,
-    rgba(2, 62, 138, 0.45) 75%,
-    rgba(3, 4, 94, 0.5) 100%);
+      rgba(72, 202, 228, 0.3) 0%,
+      rgba(0, 150, 199, 0.35) 25%,
+      rgba(0, 119, 182, 0.4) 50%,
+      rgba(2, 62, 138, 0.45) 75%,
+      rgba(3, 4, 94, 0.5) 100%);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -1300,16 +1316,23 @@ body.daytime {
   right: -20%;
   height: 8px;
   background: linear-gradient(90deg,
-    transparent 0%, rgba(255,255,255,0.3) 25%,
-    rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 75%,
-    transparent 100%);
+      transparent 0%, rgba(255, 255, 255, 0.3) 25%,
+      rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.3) 75%,
+      transparent 100%);
   animation: wave-slide 4s ease-in-out infinite;
   z-index: 2;
 }
 
 @keyframes wave-slide {
-  0%, 100% { transform: translateX(-10%); }
-  50% { transform: translateX(10%); }
+
+  0%,
+  100% {
+    transform: translateX(-10%);
+  }
+
+  50% {
+    transform: translateX(10%);
+  }
 }
 
 /* Depth layers */
@@ -1365,8 +1388,8 @@ body.daytime {
   right: 0;
   height: 2px;
   background: repeating-linear-gradient(90deg,
-    #ffd93d 0, #ffd93d 8px,
-    transparent 8px, transparent 16px);
+      #ffd93d 0, #ffd93d 8px,
+      transparent 8px, transparent 16px);
   z-index: 3;
   pointer-events: none;
 }
@@ -1401,10 +1424,23 @@ body.daytime {
 }
 
 @keyframes tuna-swim {
-  0%, 100% { transform: translateX(0) rotate(0deg); }
-  25% { transform: translateX(8px) rotate(1deg); }
-  50% { transform: translateX(0) rotate(0deg); }
-  75% { transform: translateX(-5px) rotate(-1deg); }
+
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateX(8px) rotate(1deg);
+  }
+
+  50% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  75% {
+    transform: translateX(-5px) rotate(-1deg);
+  }
 }
 
 .depth-profile__tuna-label {
@@ -1477,20 +1513,52 @@ body.daytime {
 }
 
 /* Bio status colors */
-.bio-card--good { border-left: 3px solid #4ecdc4; }
-.bio-card--good .bio-card__icon { color: #4ecdc4; }
-.bio-card--good .bio-card__status { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
+.bio-card--good {
+  border-left: 3px solid #4ecdc4;
+}
 
-.bio-card--warning { border-left: 3px solid #ffd93d; }
-.bio-card--warning .bio-card__icon { color: #ffd93d; }
-.bio-card--warning .bio-card__status { background: rgba(255, 217, 61, 0.2); color: #ffd93d; }
+.bio-card--good .bio-card__icon {
+  color: #4ecdc4;
+}
 
-.bio-card--danger { border-left: 3px solid #ff6b6b; }
-.bio-card--danger .bio-card__icon { color: #ff6b6b; }
-.bio-card--danger .bio-card__status { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+.bio-card--good .bio-card__status {
+  background: rgba(78, 205, 196, 0.2);
+  color: #4ecdc4;
+}
 
-.bio-card--unknown { border-left: 3px solid var(--color-text-tertiary); }
-.bio-card--unknown .bio-card__icon { color: var(--color-text-tertiary); }
+.bio-card--warning {
+  border-left: 3px solid #ffd93d;
+}
+
+.bio-card--warning .bio-card__icon {
+  color: #ffd93d;
+}
+
+.bio-card--warning .bio-card__status {
+  background: rgba(255, 217, 61, 0.2);
+  color: #ffd93d;
+}
+
+.bio-card--danger {
+  border-left: 3px solid #ff6b6b;
+}
+
+.bio-card--danger .bio-card__icon {
+  color: #ff6b6b;
+}
+
+.bio-card--danger .bio-card__status {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
+
+.bio-card--unknown {
+  border-left: 3px solid var(--color-text-tertiary);
+}
+
+.bio-card--unknown .bio-card__icon {
+  color: var(--color-text-tertiary);
+}
 
 /* --- MLD (Thermocline) Indicator --- */
 .marine-mld {
@@ -1682,18 +1750,39 @@ body.daytime {
 }
 
 @keyframes pulse-good {
-  0%, 100% { box-shadow: 0 0 8px rgba(78, 205, 196, 0.4); }
-  50% { box-shadow: 0 0 16px rgba(78, 205, 196, 0.7); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(78, 205, 196, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 16px rgba(78, 205, 196, 0.7);
+  }
 }
 
 @keyframes pulse-warning {
-  0%, 100% { box-shadow: 0 0 8px rgba(255, 217, 61, 0.4); }
-  50% { box-shadow: 0 0 16px rgba(255, 217, 61, 0.7); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 217, 61, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 16px rgba(255, 217, 61, 0.7);
+  }
 }
 
 @keyframes pulse-danger {
-  0%, 100% { box-shadow: 0 0 8px rgba(255, 107, 107, 0.4); }
-  50% { box-shadow: 0 0 18px rgba(255, 107, 107, 0.8); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 18px rgba(255, 107, 107, 0.8);
+  }
 }
 
 .alert-item__label {
@@ -1725,7 +1814,9 @@ body.daytime {
   margin-bottom: var(--space-sm);
 }
 
-.wave-card__icon { font-size: 16px; }
+.wave-card__icon {
+  font-size: 16px;
+}
 
 .wave-card__title {
   font-size: var(--font-size-xs);
@@ -1765,9 +1856,20 @@ body.daytime {
   display: inline-block;
 }
 
-.wave-status--good { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
-.wave-status--warning { background: rgba(255, 217, 61, 0.2); color: #ffd93d; }
-.wave-status--danger { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+.wave-status--good {
+  background: rgba(78, 205, 196, 0.2);
+  color: #4ecdc4;
+}
+
+.wave-status--warning {
+  background: rgba(255, 217, 61, 0.2);
+  color: #ffd93d;
+}
+
+.wave-status--danger {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
 
 /* --- Compass Card --- */
 .compass-card {
@@ -1871,16 +1973,29 @@ body.daytime {
   margin-left: 2px;
 }
 
-.trend-arrow--up { color: #ff6b6b; }
-.trend-arrow--down { color: #48cae4; }
-.trend-arrow--stable { color: var(--color-text-tertiary); font-size: 8px; }
-.trend-arrow--none { display: none; }
+.trend-arrow--up {
+  color: #ff6b6b;
+}
+
+.trend-arrow--down {
+  color: #48cae4;
+}
+
+.trend-arrow--stable {
+  color: var(--color-text-tertiary);
+  font-size: 8px;
+}
+
+.trend-arrow--none {
+  display: none;
+}
 
 /* --- Responsive: Marine Metrics --- */
 @media (max-width: 400px) {
   .marine-metrics-row {
     grid-template-columns: 1fr;
   }
+
   .compass-svg {
     width: 70px;
     height: 70px;

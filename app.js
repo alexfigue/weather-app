@@ -558,19 +558,19 @@ function renderApp(data) {
 // --- Marine condition assessment (for tuna aquaculture) ---
 function getMarineConditionInfo(seaTemp) {
   if (seaTemp == null) return { text: 'No disponible', class: 'unknown' };
-  if (seaTemp < 14) return { text: 'Aigua freda — vigilar atuns', class: 'cold' };
+  if (seaTemp < 14) return { text: 'Agua fría — vigilar atunes', class: 'cold' };
   if (seaTemp < 18) return { text: 'Temperatura fresca', class: 'cool' };
-  if (seaTemp < 24) return { text: 'Condicions òptimes', class: 'optimal' };
-  if (seaTemp < 28) return { text: 'Aigua càlida — control O₂', class: 'warm' };
+  if (seaTemp < 24) return { text: 'Condiciones óptimas', class: 'optimal' };
+  if (seaTemp < 28) return { text: 'Agua cálida — control O₂', class: 'warm' };
   return { text: 'Temperatura elevada ⚠️', class: 'hot' };
 }
 
 // --- Biogeochemistry status thresholds ---
 function getO2Status(val) {
   if (val == null) return { text: '--', class: 'unknown' };
-  if (val >= 200) return { text: 'Òptim', class: 'good' };
+  if (val >= 200) return { text: 'Óptimo', class: 'good' };
   if (val >= 150) return { text: 'Alerta', class: 'warning' };
-  return { text: 'Crític', class: 'danger' };
+  return { text: 'Crítico', class: 'danger' };
 }
 function getChlStatus(val) {
   if (val == null) return { text: '--', class: 'unknown' };
@@ -581,8 +581,8 @@ function getChlStatus(val) {
 function getNutrientStatus(val) {
   if (val == null) return { text: '--', class: 'unknown' };
   if (val < 2) return { text: 'Normal', class: 'good' };
-  if (val < 5) return { text: 'Elevat', class: 'warning' };
-  return { text: 'Alt', class: 'danger' };
+  if (val < 5) return { text: 'Elevado', class: 'warning' };
+  return { text: 'Alto', class: 'danger' };
 }
 function getVal(obj, key, fallback) {
   return obj && obj[key] != null ? obj[key] : fallback;
@@ -610,15 +610,15 @@ async function fetchWaveData() {
 function getWaveStatus(h) {
   if (h == null) return { text: '--', class: 'unknown' };
   if (h < 0.5) return { text: 'Mar calma', class: 'good' };
-  if (h < 1.5) return { text: 'Mar suau', class: 'good' };
-  if (h < 2.5) return { text: 'Marejol', class: 'warning' };
-  if (h < 4) return { text: 'Maregassa', class: 'danger' };
+  if (h < 1.5) return { text: 'Mar suave', class: 'good' };
+  if (h < 2.5) return { text: 'Marejada', class: 'warning' };
+  if (h < 4) return { text: 'Mar gruesa', class: 'danger' };
   return { text: 'Temporal', class: 'danger' };
 }
 
 function getWaveDirLabel(deg) {
   if (deg == null) return '--';
-  const dirs = ['N','NE','E','SE','S','SO','O','NO'];
+  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'];
   return dirs[Math.round(deg / 45) % 8];
 }
 
@@ -633,18 +633,20 @@ function renderCompassSVG(speed, direction) {
   const dir = direction || 0;
   const spd = speed != null ? speed : '--';
   return `<svg viewBox="0 0 100 100" class="compass-svg">
-    <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-    <text x="50" y="10" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="600">N</text>
-    <text x="94" y="53" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8">E</text>
-    <text x="50" y="98" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8">S</text>
-    <text x="6" y="53" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8">O</text>
+    <circle cx="50" cy="50" r="46" fill="rgba(10,20,35,0.7)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+    <text x="50" y="12" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-weight="700">N</text>
+    <text x="92" y="53" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8" font-weight="500">E</text>
+    <text x="50" y="96" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8" font-weight="500">S</text>
+    <text x="8" y="53" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8" font-weight="500">O</text>
     <g transform="rotate(${dir}, 50, 50)">
-      <line x1="50" y1="42" x2="50" y2="18" stroke="#0096c7" stroke-width="2.5" stroke-linecap="round"/>
-      <polygon points="50,14 46,22 54,22" fill="#0096c7"/>
+      <line x1="50" y1="38" x2="50" y2="16" stroke="#48cae4" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="50,12 45,20 55,20" fill="#48cae4"/>
+      <line x1="50" y1="62" x2="50" y2="80" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
     </g>
-    <circle cx="50" cy="50" r="14" fill="var(--color-card, rgba(0,0,0,0.4))"/>
+    <circle cx="50" cy="50" r="13" fill="rgba(5,10,20,0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
     <text x="50" y="49" text-anchor="middle" fill="white" font-size="11" font-weight="600">${spd}</text>
-    <text x="50" y="60" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7">m/s</text>
+    <text x="50" y="60" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7">m/s</text>
   </svg>`;
 }
 
@@ -652,7 +654,7 @@ function createTempChart(data) {
   const ctx = document.getElementById('temp-evolution-chart');
   if (!ctx || !data.daily || !window.Chart) return;
   const daily = data.daily;
-  const labels = daily.map(d => { const dt = new Date(d.date+'T00:00:00'); return `${dt.getDate()}/${dt.getMonth()+1}`; });
+  const labels = daily.map(d => { const dt = new Date(d.date + 'T00:00:00'); return `${dt.getDate()}/${dt.getMonth() + 1}`; });
   const todayStr = new Date().toISOString().split('T')[0];
   const todayIdx = daily.findIndex(d => d.date === todayStr);
   const chartColors = { surf: '#ff6b6b', d10: '#48cae4', d20: '#0077b6', d30: '#023e8a' };
@@ -661,12 +663,12 @@ function createTempChart(data) {
     data: {
       labels,
       datasets: [
-        { data: Array(labels.length).fill(24), borderColor: 'rgba(78,205,196,0.3)', backgroundColor: 'rgba(78,205,196,0.12)', fill: 1, pointRadius: 0, borderWidth: 1, borderDash: [4,4], label: '_zona_max' },
-        { data: Array(labels.length).fill(18), borderColor: 'rgba(78,205,196,0.3)', fill: false, pointRadius: 0, borderWidth: 1, borderDash: [4,4], label: '_zona_min' },
-        { label: 'Superfície', data: daily.map(d => d.surface?.temperature ?? null), borderColor: chartColors.surf, tension: 0.3, fill: false, pointRadius: 3, borderWidth: 2 },
-        { label: '10m', data: daily.map(d => d['10m']?.temperature ?? null), borderColor: chartColors.d10, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3,3] },
-        { label: '20m', data: daily.map(d => d['20m']?.temperature ?? null), borderColor: chartColors.d20, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3,3] },
-        { label: '30m', data: daily.map(d => d['30m']?.temperature ?? null), borderColor: chartColors.d30, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3,3] },
+        { data: Array(labels.length).fill(24), borderColor: 'rgba(78,205,196,0.3)', backgroundColor: 'rgba(78,205,196,0.12)', fill: 1, pointRadius: 0, borderWidth: 1, borderDash: [4, 4], label: '_zona_max' },
+        { data: Array(labels.length).fill(18), borderColor: 'rgba(78,205,196,0.3)', fill: false, pointRadius: 0, borderWidth: 1, borderDash: [4, 4], label: '_zona_min' },
+        { label: 'Superficie', data: daily.map(d => d.surface?.temperature ?? null), borderColor: chartColors.surf, tension: 0.3, fill: false, pointRadius: 3, borderWidth: 2 },
+        { label: '10m', data: daily.map(d => d['10m']?.temperature ?? null), borderColor: chartColors.d10, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
+        { label: '20m', data: daily.map(d => d['20m']?.temperature ?? null), borderColor: chartColors.d20, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
+        { label: '30m', data: daily.map(d => d['30m']?.temperature ?? null), borderColor: chartColors.d30, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
       ]
     },
     plugins: [{
@@ -675,16 +677,16 @@ function createTempChart(data) {
         if (todayIdx < 0) return;
         const { ctx: c, scales: { x }, chartArea } = chart;
         const xPos = x.getPixelForValue(todayIdx);
-        c.save(); c.strokeStyle = 'rgba(255,255,255,0.25)'; c.lineWidth = 1; c.setLineDash([4,4]);
+        c.save(); c.strokeStyle = 'rgba(255,255,255,0.25)'; c.lineWidth = 1; c.setLineDash([4, 4]);
         c.beginPath(); c.moveTo(xPos, chartArea.top); c.lineTo(xPos, chartArea.bottom); c.stroke(); c.restore();
       }
     }],
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { color: 'rgba(255,255,255,0.7)', font: { size: 10, family: 'Inter' }, filter: i => !i.text.startsWith('_'), usePointStyle: true, pointStyle: 'line' } } },
+      plugins: { legend: { labels: { color: 'rgba(255,255,255,0.9)', font: { size: 10, family: 'Inter' }, filter: i => !i.text.startsWith('_'), usePointStyle: true, pointStyle: 'line' } } },
       scales: {
-        x: { ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-        y: { ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.4)' } }
+        x: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' } },
+        y: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.85)' } }
       }
     }
   });
@@ -693,15 +695,15 @@ function createTempChart(data) {
 function createDepthChart(data) {
   const ctx = document.getElementById('depth-profile-chart');
   if (!ctx || !data.current || !window.Chart) return;
-  const depthKeys = ['surface','10m','20m','30m'];
-  const depths = [0,10,20,30];
+  const depthKeys = ['surface', '10m', '20m', '30m'];
+  const depths = [0, 10, 20, 30];
   const temps = depthKeys.map(dk => data.current[dk]?.temperature ?? null);
   new Chart(ctx, {
     type: 'scatter',
     data: {
       datasets: [{
         label: 'Temperatura',
-        data: depths.map((d,i) => ({ x: temps[i], y: d })),
+        data: depths.map((d, i) => ({ x: temps[i], y: d })),
         showLine: true, borderColor: '#ff6b6b', backgroundColor: '#ff6b6b',
         tension: 0.4, pointRadius: 5, borderWidth: 2.5,
       }]
@@ -712,15 +714,15 @@ function createDepthChart(data) {
         const { ctx: c, scales: { x, y } } = chart;
         const left = x.getPixelForValue(18), right = x.getPixelForValue(24);
         const top = y.getPixelForValue(0), bottom = y.getPixelForValue(35);
-        c.save(); c.fillStyle = 'rgba(78,205,196,0.1)'; c.fillRect(left, top, right-left, bottom-top); c.restore();
+        c.save(); c.fillStyle = 'rgba(78,205,196,0.1)'; c.fillRect(left, top, right - left, bottom - top); c.restore();
       }
     }],
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.x}°C a -${c.parsed.y}m` } } },
       scales: {
-        y: { reverse: true, min: 0, max: 35, ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 9 }, callback: v => `-${v}m` }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: 'Profunditat', color: 'rgba(255,255,255,0.4)' } },
-        x: { ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.4)' } }
+        y: { reverse: true, min: 0, max: 35, ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 }, callback: v => `-${v}m` }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: 'Profundidad', color: 'rgba(255,255,255,0.85)' } },
+        x: { ticks: { color: 'rgba(255,255,255,0.85)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.08)' }, title: { display: true, text: '°C', color: 'rgba(255,255,255,0.85)' } }
       }
     }
   });
@@ -814,15 +816,15 @@ function renderMarineSection(data, waveData) {
     <div class="glass-card alert-bar">
       <div class="alert-item">
         <span class="alert-dot alert-dot--${thermalStatus}"></span>
-        <span class="alert-item__label">Estrès Tèrmic</span>
+        <span class="alert-item__label">Estrés Térmico</span>
       </div>
       <div class="alert-item">
         <span class="alert-dot alert-dot--${qualityStatus}"></span>
-        <span class="alert-item__label">Qualitat Aigua</span>
+        <span class="alert-item__label">Calidad Agua</span>
       </div>
       <div class="alert-item">
         <span class="alert-dot alert-dot--${navStatus}"></span>
-        <span class="alert-item__label">Navegabilitat</span>
+        <span class="alert-item__label">Navegabilidad</span>
       </div>
     </div>
   ` : '';
@@ -856,7 +858,7 @@ function renderMarineSection(data, waveData) {
         <div class="glass-card wave-card">
           <div class="wave-card__header">
             <span class="wave-card__icon">🌊</span>
-            <span class="wave-card__title">Onatge</span>
+            <span class="wave-card__title">Oleaje</span>
           </div>
           <div class="wave-card__value">${waveH != null ? waveH.toFixed(1) : '--'}<small>m</small></div>
           <div class="wave-card__details">
@@ -866,7 +868,7 @@ function renderMarineSection(data, waveData) {
           <div class="wave-card__status wave-status--${waveStatus.class}">${waveStatus.text}</div>
         </div>
         <div class="glass-card compass-card">
-          <div class="compass-card__header">🧭 Corrent</div>
+          <div class="compass-card__header">🧭 Corriente</div>
           <div class="compass-card__body">
             ${renderCompassSVG(currSpeed, currDir)}
           </div>
@@ -900,7 +902,7 @@ function renderMarineSection(data, waveData) {
       const temp = getVal(d, 'temperature', '--');
       const sal = getVal(d, 'salinity', '--');
       const o2 = getVal(d, 'oxygen', '--');
-      const depthM = [0,10,20,30][i];
+      const depthM = [0, 10, 20, 30][i];
       const tT = getTrendArrow(todayData?.[dk]?.temperature, yesterdayData?.[dk]?.temperature);
       const tO = getTrendArrow(todayData?.[dk]?.oxygen, yesterdayData?.[dk]?.oxygen);
       return `
@@ -919,14 +921,14 @@ function renderMarineSection(data, waveData) {
 
     depthProfileHTML = `
       <div class="glass-card depth-profile">
-        <div class="depth-profile__title">${MARINE_ICONS.depth} Perfil de Profunditat</div>
+        <div class="depth-profile__title">${MARINE_ICONS.depth} Perfil de Profundidad</div>
         <div class="depth-profile__ocean">
           <div class="depth-profile__waves"></div>
           ${layersHTML}
           ${thermoclineHTML}
           <div class="depth-profile__tuna" style="top: ${tunaTopPct}%">
             ${getTunaSVG(70)}
-            <span class="depth-profile__tuna-label">Zona òptima</span>
+            <span class="depth-profile__tuna-label">Zona óptima</span>
           </div>
         </div>
       </div>
@@ -950,17 +952,17 @@ function renderMarineSection(data, waveData) {
         <div class="bio-card__status">${m.status.text}</div>
       </div>
     `).join('');
-    bioHTML = `<div class="glass-card marine-bio"><div class="marine-bio__title">🧬 Salut de l'Aigua</div><div class="marine-bio__grid">${cardsHTML}</div></div>`;
+    bioHTML = `<div class="glass-card marine-bio"><div class="marine-bio__title">🧬 Salud del Agua</div><div class="marine-bio__grid">${cardsHTML}</div></div>`;
   }
 
   // ─── 6. CHARTS (Chart.js) ──────────────────────────────────
   const chartsHTML = isV2 ? `
     <div class="glass-card chart-card">
-      <div class="chart-card__title">📈 Evolució Temperatura — Zona Òptima (18-24°C)</div>
+      <div class="chart-card__title">📈 Evolución Temperatura — Zona Óptima (18-24°C)</div>
       <div class="chart-container"><canvas id="temp-evolution-chart"></canvas></div>
     </div>
     <div class="glass-card chart-card">
-      <div class="chart-card__title">📊 Perfil Vertical de Profunditat</div>
+      <div class="chart-card__title">📊 Perfil Vertical de Profundidad</div>
       <div class="chart-container chart-container--small"><canvas id="depth-profile-chart"></canvas></div>
     </div>
   ` : '';
@@ -983,30 +985,30 @@ function renderMarineSection(data, waveData) {
       const cellsPerDepth = depthKeys.map(dk => {
         const d = isV2 ? (day[dk] || {}) : day;
         return {
-          temp: isV2 ? getVal(d,'temperature','--') : getVal(d,'sea_temperature','--'),
-          sal: getVal(d,'salinity','--'), curr: getVal(d,'current_speed','--'),
-          o2: getVal(d,'oxygen','--'), chl: getVal(d,'chlorophyll','--'),
+          temp: isV2 ? getVal(d, 'temperature', '--') : getVal(d, 'sea_temperature', '--'),
+          sal: getVal(d, 'salinity', '--'), curr: getVal(d, 'current_speed', '--'),
+          o2: getVal(d, 'oxygen', '--'), chl: getVal(d, 'chlorophyll', '--'),
         };
       });
       const sd = cellsPerDepth[0] || {};
-      const rc = ['forecast-row', isToday?'forecast-row--today':'', isForecast?'forecast-row--forecast':''].filter(Boolean).join(' ');
-      const da = isV2 ? depthKeys.map((dk,di) => { const c=cellsPerDepth[di]; return `data-${dk.replace('m','')}-temp="${c.temp}" data-${dk.replace('m','')}-sal="${c.sal}" data-${dk.replace('m','')}-curr="${c.curr}" data-${dk.replace('m','')}-o2="${c.o2}" data-${dk.replace('m','')}-chl="${c.chl}"`; }).join(' ') : '';
-      return `<tr class="${rc}" ${da} style="animation-delay:${i*0.03}s">
-        <td class="forecast-row__date">${isForecast?'<span class="forecast-badge">P</span>':''}${isToday?'<b>Avui</b>':`${dayLabel} ${dateLabel}`}</td>
+      const rc = ['forecast-row', isToday ? 'forecast-row--today' : '', isForecast ? 'forecast-row--forecast' : ''].filter(Boolean).join(' ');
+      const da = isV2 ? depthKeys.map((dk, di) => { const c = cellsPerDepth[di]; return `data-${dk.replace('m', '')}-temp="${c.temp}" data-${dk.replace('m', '')}-sal="${c.sal}" data-${dk.replace('m', '')}-curr="${c.curr}" data-${dk.replace('m', '')}-o2="${c.o2}" data-${dk.replace('m', '')}-chl="${c.chl}"`; }).join(' ') : '';
+      return `<tr class="${rc}" ${da} style="animation-delay:${i * 0.03}s">
+        <td class="forecast-row__date">${isForecast ? '<span class="forecast-badge">P</span>' : ''}${isToday ? '<b>Hoy</b>' : `${dayLabel} ${dateLabel}`}</td>
         <td class="fc-temp">${sd.temp}°</td><td class="fc-sal">${sd.sal}</td><td class="fc-curr">${sd.curr}</td>
-        ${isV2?`<td class="fc-o2">${sd.o2}</td><td class="fc-chl">${sd.chl}</td>`:''}
+        ${isV2 ? `<td class="fc-o2">${sd.o2}</td><td class="fc-chl">${sd.chl}</td>` : ''}
       </tr>`;
     }).join('');
 
     forecastHTML = `
       <div class="glass-card marine-forecast" id="marine-forecast">
         <div class="marine-forecast__header">
-          <div class="marine-forecast__title">🔮 Predicció Marina — ${data.daily.length} dies</div>
+          <div class="marine-forecast__title">🔮 Predicción Marina — ${data.daily.length} días</div>
           ${tabsHTML ? `<div class="depth-tabs">${tabsHTML}</div>` : ''}
         </div>
         <div class="marine-forecast__table-wrap">
           <table class="marine-table"><thead><tr>
-            <th>Dia</th><th>Temp</th><th>Sal</th><th>Corr</th>${isV2?'<th>O₂</th><th>Chl</th>':''}
+            <th>Día</th><th>Temp</th><th>Sal</th><th>Corr</th>${isV2 ? '<th>O₂</th><th>Chl</th>' : ''}
           </tr></thead><tbody>${rowsHTML}</tbody></table>
         </div>
       </div>
@@ -1014,12 +1016,12 @@ function renderMarineSection(data, waveData) {
   }
 
   // ─── 8. SOURCE ─────────────────────────────────────────────
-  const sourceHTML = `<div class="marine-source">Dades: Copernicus Marine + Open-Meteo Marine · Actualitzat: ${data.last_updated ? new Date(data.last_updated).toLocaleString('es-ES',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '--'}</div>`;
+  const sourceHTML = `<div class="marine-source">Datos: Copernicus Marine + Open-Meteo Marine · Actualizado: ${data.last_updated ? new Date(data.last_updated).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '--'}</div>`;
 
   // ─── RENDER ────────────────────────────────────────────────
   container.innerHTML = `
     <section class="marine-section" id="marine">
-      <h2 class="section-title">🌊 Estat del Mar</h2>
+      <h2 class="section-title">🌊 Estado del Mar</h2>
       ${alertHTML}
       ${heroHTML}
       ${waveCompassHTML}
@@ -1046,12 +1048,12 @@ function renderMarineSection(data, waveData) {
         e.target.classList.add('active');
         const prefix = depth === 'surface' ? 'surface' : depth.replace('m', '');
         forecastEl.querySelectorAll('tr[class*="forecast-row"]').forEach(row => {
-          const temp=row.getAttribute(`data-${prefix}-temp`), sal=row.getAttribute(`data-${prefix}-sal`);
-          const curr=row.getAttribute(`data-${prefix}-curr`), o2=row.getAttribute(`data-${prefix}-o2`), chl=row.getAttribute(`data-${prefix}-chl`);
+          const temp = row.getAttribute(`data-${prefix}-temp`), sal = row.getAttribute(`data-${prefix}-sal`);
+          const curr = row.getAttribute(`data-${prefix}-curr`), o2 = row.getAttribute(`data-${prefix}-o2`), chl = row.getAttribute(`data-${prefix}-chl`);
           if (temp != null) {
             const cells = row.querySelectorAll('td');
-            if(cells[1]) cells[1].textContent=temp+'°'; if(cells[2]) cells[2].textContent=sal;
-            if(cells[3]) cells[3].textContent=curr; if(cells[4]) cells[4].textContent=o2; if(cells[5]) cells[5].textContent=chl;
+            if (cells[1]) cells[1].textContent = temp + '°'; if (cells[2]) cells[2].textContent = sal;
+            if (cells[3]) cells[3].textContent = curr; if (cells[4]) cells[4].textContent = o2; if (cells[5]) cells[5].textContent = chl;
           }
         });
       });
