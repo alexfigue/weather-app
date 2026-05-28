@@ -1,0 +1,86 @@
+{
+  "status": "ok",
+  "last_updated": "2026-05-28T07:39:52.930147",
+  "location": {
+    "name": "L'Ametlla de Mar - Zona Gàbies",
+    "min_lat": 40.8,
+    "max_lat": 40.9,
+    "min_lon": 0.8,
+    "max_lon": 0.9
+  },
+  "period": {
+    "start": "2026-05-21",
+    "end": "2026-05-28"
+  },
+  "current": {
+    "sea_temperature": 22.02,
+    "salinity": 37.01,
+    "current_speed": 0.0,
+    "current_direction": 0.0,
+    "current_direction_label": "N"
+  },
+  "daily": [
+    {
+      "date": "2026-05-21",
+      "sea_temperature": 19.56,
+      "salinity": 36.46,
+      "current_speed": 0.071,
+      "current_direction": 8.1
+    },
+    {
+      "date": "2026-05-22",
+      "sea_temperature": 20.09,
+      "salinity": 36.41,
+      "current_speed": 0.067,
+      "current_direction": 333.4
+    },
+    {
+      "date": "2026-05-23",
+      "sea_temperature": 20.61,
+      "salinity": 36.24,
+      "current_speed": 0.032,
+      "current_direction": 341.6
+    },
+    {
+      "date": "2026-05-24",
+      "sea_temperature": 21.44,
+      "salinity": 36.34,
+      "current_speed": 0.01,
+      "current_direction": 90.0
+    },
+    {
+      "date": "2026-05-25",
+      "sea_temperature": 21.82,
+      "salinity": 36.48,
+      "current_speed": 0.01,
+      "current_direction": 270.0
+    },
+    {
+      "date": "2026-05-26",
+      "sea_temperature": 22.11,
+      "salinity": 36.62,
+      "current_speed": 0.054,
+      "current_direction": 68.2
+    },
+    {
+      "date": "2026-05-27",
+      "sea_temperature": 21.8,
+      "salinity": 36.86,
+      "current_speed": 0.0,
+      "current_direction": 180.0
+    },
+    {
+      "date": "2026-05-28",
+      "sea_temperature": 22.02,
+      "salinity": 37.01,
+      "current_speed": 0.0,
+      "current_direction": 0.0
+    }
+  ],
+  "units": {
+    "sea_temperature": "°C",
+    "salinity": "PSU",
+    "current_speed": "m/s",
+    "current_direction": "°"
+  }
+}
