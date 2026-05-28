@@ -1,5 +1,5 @@
 """
-🌊 Script per actualitzar les dades marines de Copernicus
+🌊 Script per actualitzar les dades marines de Copernicus v2
 Genera marine_data.json per a l'app web (usat per GitHub Actions i localment)
 
 Ús:
@@ -17,7 +17,7 @@ from copernicus_fetcher import fetch_all_marine_data
 
 
 def main():
-    print("🌊 Descarregant dades marines de Copernicus...\n")
+    print("🌊 Descarregant dades marines de Copernicus (v2 multi-profunditat)...\n")
 
     try:
         data = fetch_all_marine_data()
@@ -34,15 +34,26 @@ def main():
 
         # Resum
         if data.get('current'):
-            c = data['current']
-            print(f"\n📊 Resum actual:")
-            print(f"   🌡️ Temp. mar:  {c.get('sea_temperature', '--')}°C")
-            print(f"   🧂 Salinitat:  {c.get('salinity', '--')} PSU")
-            print(f"   🌊 Corrent:    {c.get('current_speed', '--')} m/s "
-                  f"{c.get('current_direction_label', '')}")
+            print(f"\n📊 Resum actual per profunditat:")
+            for depth_key, depth_data in data['current'].items():
+                temp = depth_data.get('temperature', '--')
+                sal = depth_data.get('salinity', '--')
+                o2 = depth_data.get('oxygen', '--')
+                chl = depth_data.get('chlorophyll', '--')
+                print(f"   📏 {depth_key:>8s}: "
+                      f"🌡️ {temp}°C  "
+                      f"🧂 {sal} PSU  "
+                      f"O₂ {o2}  "
+                      f"Chl {chl}")
+
+        if data.get('mixed_layer_depth'):
+            print(f"\n   🌡️ Termoclina (MLD): {data['mixed_layer_depth']}m")
 
         if data.get('daily'):
-            print(f"   📅 Dies amb dades: {len(data['daily'])}")
+            n_past = sum(1 for d in data['daily'] if not d.get('is_forecast'))
+            n_forecast = sum(1 for d in data['daily'] if d.get('is_forecast'))
+            print(f"\n   📅 Dies: {n_past} passat + {n_forecast} forecast = "
+                  f"{len(data['daily'])} total")
 
     except Exception as e:
         print(f"\n❌ Error: {e}")

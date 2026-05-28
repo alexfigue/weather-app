@@ -257,7 +257,30 @@ const MARINE_ICONS = {
   salt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="16" y2="15"/></svg>`,
   current: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M5 8l3-3M5 8l3 3"/><path d="M19 16H5M19 16l-3-3M19 16l-3 3"/></svg>`,
   fish: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6-3.56 0-7.56-2.53-8.5-6z"/><circle cx="16" cy="12" r="1"/><path d="M2 12s2-2 3.5 0c1.5 2 3.5 0 3.5 0"/></svg>`,
+  oxygen: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none">O₂</text></svg>`,
+  chlorophyll: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V8"/><path d="M5 12s2-5 7-5c5 0 7 5 7 5"/><path d="M7 16s1.5-3 5-3 5 3 5 3"/><circle cx="12" cy="5" r="2"/></svg>`,
+  thermocline: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M6 6v12"/><path d="M18 6v12"/><path d="M10 8l-4 4 4 4"/></svg>`,
+  depth: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M8 18l4 4 4-4"/><path d="M4 8h16"/><path d="M4 14h16"/></svg>`,
 };
+
+// --- Tuna SVG for depth profile ---
+function getTunaSVG(width = 80) {
+  return `<svg viewBox="0 0 120 45" width="${width}" fill="none" class="tuna-svg">
+    <ellipse cx="55" cy="22" rx="35" ry="12" fill="#1a5276" opacity="0.9"/>
+    <path d="M20,22 Q12,18 8,22 Q12,26 20,22" fill="#1a5276"/>
+    <path d="M88,22 L105,10 L98,22 L105,34 Z" fill="#1a5276"/>
+    <path d="M40,10 Q48,3 56,10" fill="#154360" opacity="0.8"/>
+    <path d="M55,34 Q60,39 65,34" fill="#154360" opacity="0.7"/>
+    <path d="M30,26 L22,34 L28,28" fill="#154360" opacity="0.7"/>
+    <circle cx="16" cy="21" r="2.5" fill="#e8f4f8" opacity="0.9"/>
+    <circle cx="16" cy="21" r="1.2" fill="#0d1b2a"/>
+    <path d="M20,22 Q50,19 85,22" stroke="#48cae4" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <line x1="78" y1="14" x2="80" y2="10" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="81" y1="14.5" x2="83" y2="11" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="78" y1="30" x2="80" y2="34" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="81" y1="29.5" x2="83" y2="33" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`;
+}
 
 // --- Main render function ---
 function renderApp(data) {
@@ -542,6 +565,29 @@ function getMarineConditionInfo(seaTemp) {
   return { text: 'Temperatura elevada ⚠️', class: 'hot' };
 }
 
+// --- Biogeochemistry status thresholds ---
+function getO2Status(val) {
+  if (val == null) return { text: '--', class: 'unknown' };
+  if (val >= 200) return { text: 'Òptim', class: 'good' };
+  if (val >= 150) return { text: 'Alerta', class: 'warning' };
+  return { text: 'Crític', class: 'danger' };
+}
+function getChlStatus(val) {
+  if (val == null) return { text: '--', class: 'unknown' };
+  if (val < 1) return { text: 'Normal', class: 'good' };
+  if (val < 5) return { text: 'Elevada', class: 'warning' };
+  return { text: 'Bloom', class: 'danger' };
+}
+function getNutrientStatus(val) {
+  if (val == null) return { text: '--', class: 'unknown' };
+  if (val < 2) return { text: 'Normal', class: 'good' };
+  if (val < 5) return { text: 'Elevat', class: 'warning' };
+  return { text: 'Alt', class: 'danger' };
+}
+function getVal(obj, key, fallback) {
+  return obj && obj[key] != null ? obj[key] : fallback;
+}
+
 // --- Fetch marine data (tries Flask backend, then static JSON) ---
 async function fetchMarineData() {
   // 1. Intentem el backend Flask (desenvolupament local amb server.py)
@@ -572,136 +618,303 @@ async function fetchMarineData() {
   return null;
 }
 
-// --- Render marine section ---
+// --- Render marine section (v2: multi-depth + biogeochemistry) ---
 function renderMarineSection(data) {
   const container = document.getElementById('marine-container');
-  if (!container || !data || !data.current) return;
+  if (!container || !data) return;
 
-  const c = data.current;
-  const seaTemp = c.sea_temperature;
-  const salinity = c.salinity;
-  const currentSpeed = c.current_speed;
-  const currentDir = c.current_direction_label || '--';
+  // Detect v2 format (has depths array)
+  const isV2 = data.depths && Array.isArray(data.depths);
+  const depthKeys = isV2 ? ['surface', '10m', '20m', '30m'] : [];
+  const depthLabels = { surface: '0m Superfície', '10m': '10m', '20m': '20m', '30m': '30m Fons Gàbia' };
+
+  // Get surface data (works for both v1 and v2)
+  const surface = isV2 ? (data.current?.surface || {}) : (data.current || {});
+  const seaTemp = isV2 ? surface.temperature : surface.sea_temperature;
   const conditionInfo = getMarineConditionInfo(seaTemp);
+  const mld = data.mixed_layer_depth;
 
-  // --- Build 7-day temperature trend chart ---
-  let trendHTML = '';
-  if (data.daily && data.daily.length > 0) {
-    const temps = data.daily
-      .filter(d => d.sea_temperature != null)
-      .slice(-7);
+  // ─── 1. MARINE HERO ────────────────────────────────────────
+  const heroHTML = `
+    <div class="glass-card marine-hero">
+      <div class="marine-hero__wave">${MARINE_ICONS.wave}</div>
+      <div class="marine-hero__temp">${seaTemp != null ? seaTemp : '--'}<sup>°C</sup></div>
+      <div class="marine-hero__label">Temperatura Superficial del Mar</div>
+      <div class="marine-hero__condition marine-condition--${conditionInfo.class}">
+        ${conditionInfo.text}
+      </div>
+    </div>
+  `;
 
-    if (temps.length > 1) {
-      const minT = Math.min(...temps.map(t => t.sea_temperature));
-      const maxT = Math.max(...temps.map(t => t.sea_temperature));
-      const range = maxT - minT || 1;
+  // ─── 2. DEPTH PROFILE (v2 only) ────────────────────────────
+  let depthProfileHTML = '';
+  if (isV2 && data.current) {
+    // Find optimal depth for tuna (18-24°C + highest O2)
+    let optimalIdx = 0;
+    let bestScore = -Infinity;
+    depthKeys.forEach((dk, i) => {
+      const d = data.current[dk] || {};
+      const t = d.temperature;
+      const o = d.oxygen;
+      if (t == null) return;
+      let score = 0;
+      if (t >= 18 && t <= 24) score += 10 - Math.abs(t - 21);
+      else score -= Math.abs(t - 21);
+      if (o != null) score += o / 50;
+      if (score > bestScore) { bestScore = score; optimalIdx = i; }
+    });
+    const tunaTopPct = optimalIdx * 25 + 8;
 
-      const barsHTML = temps.map((d, i) => {
-        const pct = ((d.sea_temperature - minT) / range) * 55 + 35;
-        const dateObj = new Date(d.date + 'T00:00:00');
-        const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
-        return `
-          <div class="trend-bar" style="animation-delay: ${i * 0.06}s">
-            <span class="trend-bar__value">${d.sea_temperature}°</span>
-            <div class="trend-bar__fill" style="--bar-height: ${pct}%"></div>
-            <span class="trend-bar__label">${dayLabel}</span>
-          </div>
-        `;
-      }).join('');
+    // MLD position (0-30m mapped to 0-100%)
+    const mldPct = mld != null ? Math.min((mld / 30) * 100, 100) : null;
 
-      trendHTML = `
-        <div class="glass-card marine-trend">
-          <div class="marine-trend__title">Temperatura del mar — últims ${temps.length} dies</div>
-          <div class="marine-trend__chart">${barsHTML}</div>
-        </div>
-      `;
-    }
-  }
-
-  // --- Build daily salinity & currents table ---
-  let tableHTML = '';
-  if (data.daily && data.daily.length > 1) {
-    const rows = data.daily.slice(-7).map(d => {
-      const dateObj = new Date(d.date + 'T00:00:00');
-      const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
-      const dateLabel = `${dateObj.getDate()}/${dateObj.getMonth() + 1}`;
+    const layersHTML = depthKeys.map((dk, i) => {
+      const d = data.current[dk] || {};
+      const temp = getVal(d, 'temperature', '--');
+      const sal = getVal(d, 'salinity', '--');
+      const o2 = getVal(d, 'oxygen', '--');
+      const depthM = [0, 10, 20, 30][i];
       return `
-        <tr>
-          <td>${dayLabel} ${dateLabel}</td>
-          <td>${d.sea_temperature != null ? d.sea_temperature + '°' : '--'}</td>
-          <td>${d.salinity != null ? d.salinity : '--'}</td>
-          <td>${d.current_speed != null ? d.current_speed : '--'}</td>
-        </tr>
+        <div class="depth-layer" style="top: ${i * 25}%; animation-delay: ${i * 0.1}s">
+          <div class="depth-layer__marker">
+            <span class="depth-layer__depth">${depthM}m</span>
+          </div>
+          <div class="depth-layer__data">
+            <span class="depth-layer__val"><b>${temp}</b>°C</span>
+            <span class="depth-layer__val">${sal} PSU</span>
+            <span class="depth-layer__val">O₂ ${o2}</span>
+          </div>
+        </div>
       `;
     }).join('');
 
-    tableHTML = `
-      <div class="glass-card marine-table-wrap">
-        <table class="marine-table">
-          <thead>
-            <tr>
-              <th>Dia</th>
-              <th>Temp</th>
-              <th>Salinitat</th>
-              <th>Corrent</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
+    const thermoclineHTML = mldPct != null ? `
+      <div class="depth-thermocline" style="top: ${mldPct}%">
+        <span class="depth-thermocline__label">⟷ Termoclina ~${mld}m</span>
+      </div>
+    ` : '';
+
+    depthProfileHTML = `
+      <div class="glass-card depth-profile">
+        <div class="depth-profile__title">${MARINE_ICONS.depth} Perfil de Profunditat</div>
+        <div class="depth-profile__ocean">
+          <div class="depth-profile__waves"></div>
+          ${layersHTML}
+          ${thermoclineHTML}
+          <div class="depth-profile__tuna" style="top: ${tunaTopPct}%">
+            ${getTunaSVG(70)}
+            <span class="depth-profile__tuna-label">Zona òptima</span>
+          </div>
+        </div>
       </div>
     `;
   }
 
-  // --- Render full marine section ---
+  // ─── 3. BIOGEOCHEMISTRY CARDS (v2 only) ────────────────────
+  let bioHTML = '';
+  if (isV2 && surface) {
+    const o2Val = surface.oxygen;
+    const chlVal = surface.chlorophyll;
+    const no3Val = surface.nitrate;
+    const po4Val = surface.phosphate;
+    const o2Status = getO2Status(o2Val);
+    const chlStatus = getChlStatus(chlVal);
+    const no3Status = getNutrientStatus(no3Val);
+    const po4Status = getNutrientStatus(po4Val);
+
+    bioHTML = `
+      <div class="glass-card marine-bio">
+        <div class="marine-bio__title">🧬 Salut de l'Aigua</div>
+        <div class="marine-bio__grid">
+          <div class="bio-card bio-card--${o2Status.class}">
+            <div class="bio-card__icon">O₂</div>
+            <div class="bio-card__value">${o2Val != null ? o2Val : '--'}</div>
+            <div class="bio-card__unit">mmol/m³</div>
+            <div class="bio-card__status">${o2Status.text}</div>
+          </div>
+          <div class="bio-card bio-card--${chlStatus.class}">
+            <div class="bio-card__icon">Chl</div>
+            <div class="bio-card__value">${chlVal != null ? chlVal : '--'}</div>
+            <div class="bio-card__unit">mg/m³</div>
+            <div class="bio-card__status">${chlStatus.text}</div>
+          </div>
+          <div class="bio-card bio-card--${no3Status.class}">
+            <div class="bio-card__icon">NO₃</div>
+            <div class="bio-card__value">${no3Val != null ? no3Val : '--'}</div>
+            <div class="bio-card__unit">mmol/m³</div>
+            <div class="bio-card__status">${no3Status.text}</div>
+          </div>
+          <div class="bio-card bio-card--${po4Status.class}">
+            <div class="bio-card__icon">PO₄</div>
+            <div class="bio-card__value">${po4Val != null ? po4Val : '--'}</div>
+            <div class="bio-card__unit">mmol/m³</div>
+            <div class="bio-card__status">${po4Status.text}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ─── 4. MLD INDICATOR (v2 only) ────────────────────────────
+  let mldHTML = '';
+  if (isV2 && mld != null) {
+    mldHTML = `
+      <div class="glass-card marine-mld">
+        <div class="marine-mld__icon">${MARINE_ICONS.thermocline}</div>
+        <div class="marine-mld__info">
+          <div class="marine-mld__value">${mld}<small>m</small></div>
+          <div class="marine-mld__label">Profunditat Capa de Mescla (Termoclina)</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ─── 5. FORECAST TABLE (v2 with depth tabs) ────────────────
+  let forecastHTML = '';
+  if (data.daily && data.daily.length > 0) {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const activeDepth = 'surface';
+
+    // Tabs
+    const tabsHTML = isV2 ? depthKeys.map(dk => {
+      const label = dk === 'surface' ? 'Sup.' : dk;
+      const active = dk === activeDepth ? 'active' : '';
+      return `<button class="depth-tab ${active}" data-depth="${dk}">${label}</button>`;
+    }).join('') : '';
+
+    // Table rows
+    const rowsHTML = data.daily.map((day, i) => {
+      const dateObj = new Date(day.date + 'T00:00:00');
+      const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
+      const dateLabel = `${dateObj.getDate()}/${dateObj.getMonth() + 1}`;
+      const isToday = day.date === todayStr;
+      const isForecast = day.is_forecast;
+
+      // Get data for each depth
+      const cellsPerDepth = depthKeys.map(dk => {
+        const d = isV2 ? (day[dk] || {}) : day;
+        const temp = isV2 ? getVal(d, 'temperature', '--') : getVal(d, 'sea_temperature', '--');
+        const sal = getVal(d, 'salinity', '--');
+        const curr = getVal(d, 'current_speed', '--');
+        const o2 = getVal(d, 'oxygen', '--');
+        const chl = getVal(d, 'chlorophyll', '--');
+        return { temp, sal, curr, o2, chl };
+      });
+
+      // Show surface by default (other depths shown via tab switching)
+      const sd = cellsPerDepth[0] || {};
+
+      const rowClass = [
+        'forecast-row',
+        isToday ? 'forecast-row--today' : '',
+        isForecast ? 'forecast-row--forecast' : '',
+      ].filter(Boolean).join(' ');
+
+      // Build hidden data attributes for tab switching
+      const dataAttrs = isV2 ? depthKeys.map((dk, di) => {
+        const c = cellsPerDepth[di];
+        return `data-${dk.replace('m','')}-temp="${c.temp}" data-${dk.replace('m','')}-sal="${c.sal}" data-${dk.replace('m','')}-curr="${c.curr}" data-${dk.replace('m','')}-o2="${c.o2}" data-${dk.replace('m','')}-chl="${c.chl}"`;
+      }).join(' ') : '';
+
+      return `
+        <tr class="${rowClass}" ${dataAttrs} style="animation-delay:${i * 0.03}s">
+          <td class="forecast-row__date">
+            ${isForecast ? '<span class="forecast-badge">P</span>' : ''}
+            ${isToday ? '<b>Avui</b>' : `${dayLabel} ${dateLabel}`}
+          </td>
+          <td class="fc-temp">${sd.temp}°</td>
+          <td class="fc-sal">${sd.sal}</td>
+          <td class="fc-curr">${sd.curr}</td>
+          ${isV2 ? `<td class="fc-o2">${sd.o2}</td>` : ''}
+          ${isV2 ? `<td class="fc-chl">${sd.chl}</td>` : ''}
+        </tr>
+      `;
+    }).join('');
+
+    forecastHTML = `
+      <div class="glass-card marine-forecast" id="marine-forecast">
+        <div class="marine-forecast__header">
+          <div class="marine-forecast__title">🔮 Predicció Marina — ${data.daily.length} dies</div>
+          ${tabsHTML ? `<div class="depth-tabs">${tabsHTML}</div>` : ''}
+        </div>
+        <div class="marine-forecast__table-wrap">
+          <table class="marine-table">
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Temp</th>
+                <th>Sal</th>
+                <th>Corr</th>
+                ${isV2 ? '<th>O₂</th>' : ''}
+                ${isV2 ? '<th>Chl</th>' : ''}
+              </tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  // ─── 6. SOURCE FOOTER ──────────────────────────────────────
+  const sourceHTML = `
+    <div class="marine-source">
+      Dades: Copernicus Marine Service · Actualitzat: ${data.last_updated
+        ? new Date(data.last_updated).toLocaleString('es-ES', {
+          day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+        })
+        : '--'}
+    </div>
+  `;
+
+  // ─── RENDER ALL ────────────────────────────────────────────
   container.innerHTML = `
     <section class="marine-section" id="marine">
       <h2 class="section-title">🌊 Estat del Mar</h2>
-
-      <!-- Sea Temperature Hero -->
-      <div class="glass-card marine-hero">
-        <div class="marine-hero__wave">${MARINE_ICONS.wave}</div>
-        <div class="marine-hero__temp">${seaTemp != null ? seaTemp : '--'}<sup>°C</sup></div>
-        <div class="marine-hero__label">Temperatura Superficial del Mar</div>
-        <div class="marine-hero__condition marine-condition--${conditionInfo.class}">
-          ${conditionInfo.text}
-        </div>
-      </div>
-
-      <!-- Marine Details Grid -->
-      <div class="glass-card marine-details">
-        <div class="detail-item">
-          <div class="detail-item__icon marine-icon">${MARINE_ICONS.salt}</div>
-          <div class="detail-item__value">${salinity != null ? salinity : '--'}</div>
-          <div class="detail-item__label">Salinitat PSU</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-item__icon marine-icon">${MARINE_ICONS.current}</div>
-          <div class="detail-item__value">${currentSpeed != null ? currentSpeed : '--'} <small>m/s</small></div>
-          <div class="detail-item__label">Corrent ${currentDir}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-item__icon marine-icon">${MARINE_ICONS.fish}</div>
-          <div class="detail-item__value">${seaTemp != null && seaTemp >= 18 && seaTemp <= 24 ? '✓ Bé' : '⚠ Alerta'}</div>
-          <div class="detail-item__label">Estat Gàbies</div>
-        </div>
-      </div>
-
-      <!-- Temperature Trend Chart -->
-      ${trendHTML}
-
-      <!-- Daily Data Table -->
-      ${tableHTML}
-
-      <!-- Source -->
-      <div class="marine-source">
-        Dades: Copernicus Marine Service · Actualitzat: ${data.last_updated
-      ? new Date(data.last_updated).toLocaleString('es-ES', {
-        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-      })
-      : '--'}
-      </div>
+      ${heroHTML}
+      ${depthProfileHTML}
+      ${bioHTML}
+      ${mldHTML}
+      ${forecastHTML}
+      ${sourceHTML}
     </section>
   `;
+
+  // ─── TAB SWITCHING LOGIC ───────────────────────────────────
+  if (isV2) {
+    const forecastEl = document.getElementById('marine-forecast');
+    if (forecastEl) {
+      forecastEl.addEventListener('click', (e) => {
+        if (!e.target.matches('.depth-tab')) return;
+        const depth = e.target.dataset.depth;
+
+        // Update active tab
+        forecastEl.querySelectorAll('.depth-tab').forEach(t => t.classList.remove('active'));
+        e.target.classList.add('active');
+
+        // Map depth key to data attribute prefix
+        const prefix = depth === 'surface' ? 'surface' : depth.replace('m', '');
+
+        // Update table cells
+        forecastEl.querySelectorAll('tr[class*="forecast-row"]').forEach(row => {
+          const tr = row.closest ? row : row;
+          const temp = tr.getAttribute(`data-${prefix}-temp`);
+          const sal = tr.getAttribute(`data-${prefix}-sal`);
+          const curr = tr.getAttribute(`data-${prefix}-curr`);
+          const o2 = tr.getAttribute(`data-${prefix}-o2`);
+          const chl = tr.getAttribute(`data-${prefix}-chl`);
+          if (temp != null) {
+            const cells = tr.querySelectorAll('td');
+            if (cells[1]) cells[1].textContent = temp + '°';
+            if (cells[2]) cells[2].textContent = sal;
+            if (cells[3]) cells[3].textContent = curr;
+            if (cells[4]) cells[4].textContent = o2;
+            if (cells[5]) cells[5].textContent = chl;
+          }
+        });
+      });
+    }
+  }
 }
 
 // --- Fetch and render marine data (non-blocking) ---

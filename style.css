@@ -1252,3 +1252,381 @@ body.daytime {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ============================================
+   🌊🐟 Marine v2: Depth Profile + Bio + Forecast
+   ============================================ */
+
+/* --- Depth Profile Card --- */
+.depth-profile {
+  margin-bottom: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.depth-profile__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.depth-profile__title svg {
+  width: 18px;
+  height: 18px;
+  color: #0096c7;
+}
+
+.depth-profile__ocean {
+  position: relative;
+  height: 380px;
+  background: linear-gradient(180deg,
+    rgba(72, 202, 228, 0.3) 0%,
+    rgba(0, 150, 199, 0.35) 25%,
+    rgba(0, 119, 182, 0.4) 50%,
+    rgba(2, 62, 138, 0.45) 75%,
+    rgba(3, 4, 94, 0.5) 100%);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Animated wave at top */
+.depth-profile__waves {
+  position: absolute;
+  top: 0;
+  left: -20%;
+  right: -20%;
+  height: 8px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255,255,255,0.3) 25%,
+    rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 75%,
+    transparent 100%);
+  animation: wave-slide 4s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes wave-slide {
+  0%, 100% { transform: translateX(-10%); }
+  50% { transform: translateX(10%); }
+}
+
+/* Depth layers */
+.depth-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 25%;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--space-md) var(--space-lg);
+  padding-top: var(--space-lg);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  animation: fadeIn 0.5s ease both;
+  z-index: 1;
+}
+
+.depth-layer__marker {
+  min-width: 36px;
+  margin-right: var(--space-md);
+}
+
+.depth-layer__depth {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.depth-layer__data {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.depth-layer__val {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+}
+
+.depth-layer__val b {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Thermocline line */
+.depth-thermocline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(90deg,
+    #ffd93d 0, #ffd93d 8px,
+    transparent 8px, transparent 16px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.depth-thermocline__label {
+  position: absolute;
+  right: var(--space-md);
+  top: -18px;
+  font-size: var(--font-size-xs);
+  color: #ffd93d;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Tuna SVG */
+.depth-profile__tuna {
+  position: absolute;
+  right: 10%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: top 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tuna-svg {
+  animation: tuna-swim 5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes tuna-swim {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(8px) rotate(1deg); }
+  50% { transform: translateX(0) rotate(0deg); }
+  75% { transform: translateX(-5px) rotate(-1deg); }
+}
+
+.depth-profile__tuna-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Biogeochemistry Cards --- */
+.marine-bio {
+  margin-bottom: var(--space-md);
+}
+
+.marine-bio__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.marine-bio__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+
+.bio-card {
+  text-align: center;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.bio-card__icon {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  opacity: 0.9;
+  margin-bottom: var(--space-xs);
+}
+
+.bio-card__value {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.bio-card__unit {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-xs);
+}
+
+.bio-card__status {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Bio status colors */
+.bio-card--good { border-left: 3px solid #4ecdc4; }
+.bio-card--good .bio-card__icon { color: #4ecdc4; }
+.bio-card--good .bio-card__status { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
+
+.bio-card--warning { border-left: 3px solid #ffd93d; }
+.bio-card--warning .bio-card__icon { color: #ffd93d; }
+.bio-card--warning .bio-card__status { background: rgba(255, 217, 61, 0.2); color: #ffd93d; }
+
+.bio-card--danger { border-left: 3px solid #ff6b6b; }
+.bio-card--danger .bio-card__icon { color: #ff6b6b; }
+.bio-card--danger .bio-card__status { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+
+.bio-card--unknown { border-left: 3px solid var(--color-text-tertiary); }
+.bio-card--unknown .bio-card__icon { color: var(--color-text-tertiary); }
+
+/* --- MLD (Thermocline) Indicator --- */
+.marine-mld {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.marine-mld__icon {
+  width: 32px;
+  height: 32px;
+  color: #ffd93d;
+  flex-shrink: 0;
+}
+
+.marine-mld__value {
+  font-size: var(--font-size-2xl);
+  font-weight: 200;
+  line-height: 1;
+}
+
+.marine-mld__value small {
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.marine-mld__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+/* --- Forecast Section --- */
+.marine-forecast {
+  margin-bottom: var(--space-md);
+}
+
+.marine-forecast__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.marine-forecast__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.marine-forecast__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.marine-forecast__table-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Depth Tabs --- */
+.depth-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.depth-tab {
+  flex: 1;
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.depth-tab.active {
+  background: #0096c7;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 150, 199, 0.3);
+}
+
+.depth-tab:not(.active):hover {
+  color: var(--color-text-secondary);
+  background: var(--color-surface-hover);
+}
+
+/* --- Forecast Table Rows --- */
+.forecast-row {
+  animation: fadeInUp 0.3s ease both;
+}
+
+.forecast-row--today {
+  background: var(--color-surface-active) !important;
+}
+
+.forecast-row--today td {
+  font-weight: 600;
+}
+
+.forecast-row--forecast {
+  opacity: 0.75;
+}
+
+.forecast-row--forecast td:first-child {
+  font-style: italic;
+}
+
+.forecast-row__date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.forecast-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: rgba(108, 99, 255, 0.25);
+  color: var(--color-accent);
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
