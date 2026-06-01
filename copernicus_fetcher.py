@@ -4,7 +4,7 @@ Mòdul per descarregar i processar dades marines de Copernicus Marine Service
 per a la zona de L'Ametlla de Mar (gàbies d'aqüicultura Balfegó).
 
 Versió 2 — Multi-profunditat + Biogeoquímica + Forecast
-  - Dades a 4 profunditats: superfície, 10m, 20m, 30m
+  - Dades a 5 profunditats: superfície, 10m, 20m, 30m, 40m
   - Biogeoquímica: oxigen dissolt, clorofil·la, nitrats, fosfats
   - Termoclina: Mixed Layer Depth (MLD)
   - Forecast: 3 dies enrere + 5 dies endavant
@@ -35,7 +35,7 @@ ZONE = {
 }
 
 # Profunditats a extreure (metres)
-DEPTHS = [0, 10, 20, 30]
+DEPTHS = [0, 10, 20, 30, 40]
 
 # Rang temporal
 DAYS_BACK = 3
@@ -158,7 +158,7 @@ def _fetch_and_process(ds_config, start_date, end_date, temp_dir):
     # Afegir rang de profunditat si el dataset ho suporta
     if ds_config['has_depth']:
         params['minimum_depth'] = 0
-        params['maximum_depth'] = 35  # Cobreix fins a 30m + marge
+        params['maximum_depth'] = 45  # Cobreix fins a 40m + marge
 
     copernicusmarine.subset(**params)
 

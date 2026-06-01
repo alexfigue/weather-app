@@ -657,7 +657,7 @@ function createTempChart(data) {
   const labels = daily.map(d => { const dt = new Date(d.date + 'T00:00:00'); return `${dt.getDate()}/${dt.getMonth() + 1}`; });
   const todayStr = new Date().toISOString().split('T')[0];
   const todayIdx = daily.findIndex(d => d.date === todayStr);
-  const chartColors = { surf: '#ff6b6b', d10: '#48cae4', d20: '#0077b6', d30: '#023e8a' };
+  const chartColors = { surf: '#ff6b6b', d10: '#48cae4', d20: '#0077b6', d30: '#023e8a', d40: '#012a4a' };
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -669,6 +669,7 @@ function createTempChart(data) {
         { label: '10m', data: daily.map(d => d['10m']?.temperature ?? null), borderColor: chartColors.d10, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
         { label: '20m', data: daily.map(d => d['20m']?.temperature ?? null), borderColor: chartColors.d20, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
         { label: '30m', data: daily.map(d => d['30m']?.temperature ?? null), borderColor: chartColors.d30, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
+        { label: '40m', data: daily.map(d => d['40m']?.temperature ?? null), borderColor: chartColors.d40, tension: 0.3, fill: false, pointRadius: 2, borderWidth: 1.5, borderDash: [3, 3] },
       ]
     },
     plugins: [{
@@ -695,8 +696,8 @@ function createTempChart(data) {
 function createDepthChart(data) {
   const ctx = document.getElementById('depth-profile-chart');
   if (!ctx || !data.current || !window.Chart) return;
-  const depthKeys = ['surface', '10m', '20m', '30m'];
-  const depths = [0, 10, 20, 30];
+  const depthKeys = ['surface', '10m', '20m', '30m', '40m'];
+  const depths = [0, 10, 20, 30, 40];
   const temps = depthKeys.map(dk => data.current[dk]?.temperature ?? null);
   new Chart(ctx, {
     type: 'scatter',
@@ -713,7 +714,7 @@ function createDepthChart(data) {
       beforeDraw(chart) {
         const { ctx: c, scales: { x, y } } = chart;
         const left = x.getPixelForValue(18), right = x.getPixelForValue(24);
-        const top = y.getPixelForValue(0), bottom = y.getPixelForValue(35);
+        const top = y.getPixelForValue(0), bottom = y.getPixelForValue(45);
         c.save(); c.fillStyle = 'rgba(78,205,196,0.1)'; c.fillRect(left, top, right - left, bottom - top); c.restore();
       }
     }],
@@ -721,7 +722,7 @@ function createDepthChart(data) {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.x}°C a -${c.parsed.y}m` } } },
       scales: {
-        y: { reverse: true, min: 0, max: 35, ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' }, callback: v => `-${v}m` }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: 'Profundidad', color: '#1a1a2e', font: { weight: '600' } } },
+        y: { reverse: true, min: 0, max: 45, ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' }, callback: v => `-${v}m` }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: 'Profundidad', color: '#1a1a2e', font: { weight: '600' } } },
         x: { ticks: { color: '#1a1a2e', font: { size: 9, weight: '600' } }, grid: { color: 'rgba(0,0,0,0.1)' }, title: { display: true, text: '°C', color: '#1a1a2e', font: { weight: '600' } } }
       }
     }
@@ -784,7 +785,7 @@ function renderMarineSection(data, waveData) {
   if (!container || !data) return;
 
   const isV2 = data.depths && Array.isArray(data.depths);
-  const depthKeys = isV2 ? ['surface', '10m', '20m', '30m'] : [];
+  const depthKeys = isV2 ? ['surface', '10m', '20m', '30m', '40m'] : [];
   const surface = isV2 ? (data.current?.surface || {}) : (data.current || {});
   const seaTemp = isV2 ? surface.temperature : surface.sea_temperature;
   const conditionInfo = getMarineConditionInfo(seaTemp);
@@ -894,19 +895,19 @@ function renderMarineSection(data, waveData) {
       if (d.oxygen != null) score += d.oxygen / 50;
       if (score > bestScore) { bestScore = score; optimalIdx = i; }
     });
-    const tunaTopPct = optimalIdx * 25 + 8;
-    const mldPct = mld != null ? Math.min((mld / 30) * 100, 100) : null;
+    const tunaTopPct = optimalIdx * 20 + 5;
+    const mldPct = mld != null ? Math.min((mld / 40) * 100, 100) : null;
 
     const layersHTML = depthKeys.map((dk, i) => {
       const d = data.current[dk] || {};
       const temp = getVal(d, 'temperature', '--');
       const sal = getVal(d, 'salinity', '--');
       const o2 = getVal(d, 'oxygen', '--');
-      const depthM = [0, 10, 20, 30][i];
+      const depthM = [0, 10, 20, 30, 40][i];
       const tT = getTrendArrow(todayData?.[dk]?.temperature, yesterdayData?.[dk]?.temperature);
       const tO = getTrendArrow(todayData?.[dk]?.oxygen, yesterdayData?.[dk]?.oxygen);
       return `
-        <div class="depth-layer" style="top: ${i * 25}%; animation-delay: ${i * 0.1}s">
+        <div class="depth-layer" style="top: ${i * 20}%; animation-delay: ${i * 0.1}s">
           <div class="depth-layer__marker"><span class="depth-layer__depth">${depthM}m</span></div>
           <div class="depth-layer__data">
             <span class="depth-layer__val"><b>${temp}</b>°C ${tT.arrow ? `<span class="trend-arrow trend-arrow--${tT.class}">${tT.arrow}</span>` : ''}</span>
