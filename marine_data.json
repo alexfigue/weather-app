@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-  "last_updated": "2026-05-31T22:08:30.067896+00:00",
+  "last_updated": "2026-06-01T06:11:58.945576+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
@@ -16,102 +16,57 @@
     30
   ],
   "period": {
-    "start": "2026-05-28",
-    "end": "2026-06-05"
+    "start": "2026-05-29",
+    "end": "2026-06-06"
   },
   "current": {
     "surface": {
-      "temperature": 20.85,
-      "salinity": 37.74,
-      "current_speed": 0.036,
-      "current_direction": 213.7,
-      "current_direction_label": "SO",
-      "oxygen": 249.85,
+      "temperature": 20.66,
+      "salinity": 37.68,
+      "current_speed": 0.04,
+      "current_direction": 0.0,
+      "current_direction_label": "N",
+      "oxygen": 249.44,
       "chlorophyll": 0.12,
-      "nitrate": 1.22,
+      "nitrate": 1.37,
       "phosphate": 0.04
     },
     "10m": {
-      "temperature": 18.72,
-      "salinity": 38.02,
-      "current_speed": 0.014,
-      "current_direction": 45.0,
-      "current_direction_label": "NE",
-      "oxygen": 249.9,
+      "temperature": 19.08,
+      "salinity": 37.99,
+      "current_speed": 0.01,
+      "current_direction": 0.0,
+      "current_direction_label": "N",
+      "oxygen": 249.45,
       "chlorophyll": 0.12,
-      "nitrate": 1.22,
+      "nitrate": 1.37,
       "phosphate": 0.04
     },
     "20m": {
-      "temperature": 17.38,
+      "temperature": 17.47,
       "salinity": 38.09,
       "current_speed": 0.0,
-      "current_direction": 0.0,
-      "current_direction_label": "N",
-      "oxygen": 252.99,
-      "chlorophyll": 0.17,
-      "nitrate": 0.47,
+      "current_direction": 180.0,
+      "current_direction_label": "S",
+      "oxygen": 253.24,
+      "chlorophyll": 0.16,
+      "nitrate": 0.54,
       "phosphate": 0.02
     },
     "30m": {
-      "temperature": 16.58,
+      "temperature": 16.69,
       "salinity": 38.11,
-      "current_speed": 0.0,
-      "current_direction": 0.0,
-      "current_direction_label": "N",
-      "oxygen": 254.98,
-      "chlorophyll": 0.2,
-      "nitrate": 0.1,
+      "current_speed": 0.01,
+      "current_direction": 180.0,
+      "current_direction_label": "S",
+      "oxygen": 254.99,
+      "chlorophyll": 0.19,
+      "nitrate": 0.11,
       "phosphate": 0.01
     }
   },
-  "mixed_layer_depth": 11.77,
+  "mixed_layer_depth": 11.76,
   "daily": [
-    {
-      "date": "2026-05-28",
-      "is_forecast": false,
-      "surface": {
-        "temperature": 21.58,
-        "salinity": 37.21,
-        "current_speed": 0.051,
-        "current_direction": 78.7,
-        "oxygen": 258.68,
-        "chlorophyll": 0.25,
-        "nitrate": 2.5,
-        "phosphate": 0.09
-      },
-      "10m": {
-        "temperature": 17.61,
-        "salinity": 38.05,
-        "current_speed": 0.022,
-        "current_direction": 206.6,
-        "oxygen": 258.67,
-        "chlorophyll": 0.25,
-        "nitrate": 2.5,
-        "phosphate": 0.09
-      },
-      "20m": {
-        "temperature": 17.06,
-        "salinity": 38.09,
-        "current_speed": 0.022,
-        "current_direction": 206.6,
-        "oxygen": 252.09,
-        "chlorophyll": 0.25,
-        "nitrate": 0.93,
-        "phosphate": 0.04
-      },
-      "30m": {
-        "temperature": 16.46,
-        "salinity": 38.12,
-        "current_speed": 0.02,
-        "current_direction": 180.0,
-        "oxygen": 253.43,
-        "chlorophyll": 0.22,
-        "nitrate": 0.21,
-        "phosphate": 0.02
-      },
-      "mixed_layer_depth": 12.07
-    },
     {
       "date": "2026-05-29",
       "is_forecast": false,
@@ -249,7 +204,7 @@
     },
     {
       "date": "2026-06-01",
-      "is_forecast": true,
+      "is_forecast": false,
       "surface": {
         "temperature": 22.78,
         "salinity": 37.62,
@@ -471,6 +426,51 @@
         "phosphate": 0.01
       },
       "mixed_layer_depth": 11.77
+    },
+    {
+      "date": "2026-06-06",
+      "is_forecast": true,
+      "surface": {
+        "temperature": 20.66,
+        "salinity": 37.68,
+        "current_speed": 0.04,
+        "current_direction": 0.0,
+        "oxygen": 249.44,
+        "chlorophyll": 0.12,
+        "nitrate": 1.37,
+        "phosphate": 0.04
+      },
+      "10m": {
+        "temperature": 19.08,
+        "salinity": 37.99,
+        "current_speed": 0.01,
+        "current_direction": 0.0,
+        "oxygen": 249.45,
+        "chlorophyll": 0.12,
+        "nitrate": 1.37,
+        "phosphate": 0.04
+      },
+      "20m": {
+        "temperature": 17.47,
+        "salinity": 38.09,
+        "current_speed": 0.0,
+        "current_direction": 180.0,
+        "oxygen": 253.24,
+        "chlorophyll": 0.16,
+        "nitrate": 0.54,
+        "phosphate": 0.02
+      },
+      "30m": {
+        "temperature": 16.69,
+        "salinity": 38.11,
+        "current_speed": 0.01,
+        "current_direction": 180.0,
+        "oxygen": 254.99,
+        "chlorophyll": 0.19,
+        "nitrate": 0.11,
+        "phosphate": 0.01
+      },
+      "mixed_layer_depth": 11.76
     }
   ],
   "units": {
