@@ -166,7 +166,7 @@ function isDaytime(sunrise, sunset) {
 async function fetchWeatherData() {
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lon}` +
     `&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,pressure_msl,visibility,dew_point_2m` +
-    `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max` +
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant` +
     `&past_days=${CONFIG.pastDays}&forecast_days=${CONFIG.forecastDays}` +
     `&timezone=${CONFIG.timezone}`;
 
@@ -297,6 +297,70 @@ function renderWindSection(weather) {
   const currentDir = h.wind_direction_10m[nowIdx];
   const currentDirLabel = currentDir != null ? getWindDirection(currentDir) : '--';
 
+  // --- Daily Wind Forecast Table ---
+  const d = weather.daily;
+  let forecastTableHTML = '';
+  
+  if (d && d.time) {
+    const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    const todayIndex = d.time.indexOf(todayStr);
+    const refIndex = todayIndex >= 0 ? todayIndex : 0;
+    
+    // 3 días atrás y 5 días adelante
+    const startIndex = Math.max(0, refIndex - 3);
+    const endIndex = Math.min(d.time.length - 1, refIndex + 5);
+    
+    let rowsHTML = '';
+    
+    for (let i = startIndex; i <= endIndex; i++) {
+      const dateStr = d.time[i];
+      const dateObj = new Date(dateStr + 'T00:00:00');
+      const dayLabel = DAYS_SHORT_ES[dateObj.getDay()];
+      const dateLabel = `${dateObj.getDate()}/${dateObj.getMonth() + 1}`;
+      const isToday = dateStr === todayStr;
+      const isForecast = dateStr > todayStr;
+      
+      const maxSpeed = d.wind_speed_10m_max[i] != null ? d.wind_speed_10m_max[i].toFixed(2) : '--';
+      const maxGust = d.wind_gusts_10m_max[i] != null ? d.wind_gusts_10m_max[i].toFixed(2) : '--';
+      const dominantDir = getWindDirection(d.wind_direction_10m_dominant[i]);
+      
+      const rc = ['forecast-row', isToday ? 'forecast-row--today' : '', isForecast ? 'forecast-row--forecast' : ''].filter(Boolean).join(' ');
+      
+      const dateDisplay = isToday ? '<b>Hoy</b>' : `${dayLabel} ${dateLabel}`;
+      const badgeHTML = isForecast ? '<span class="forecast-badge">P</span>' : '';
+      
+      rowsHTML += `<tr class="${rc}" style="animation-delay:${(i - startIndex) * 0.03}s">
+        <td class="forecast-row__date">${badgeHTML}${dateDisplay}</td>
+        <td class="fc-temp" style="text-align: center;">${maxSpeed} <small>km/h</small></td>
+        <td class="fc-sal" style="color: #ff6b6b; text-align: center;">${maxGust} <small>km/h</small></td>
+        <td class="fc-curr" style="text-align: center;">${dominantDir}</td>
+      </tr>`;
+    }
+
+    forecastTableHTML = `
+      <div class="glass-card marine-forecast" style="margin-top: 1.5rem;">
+        <div class="marine-forecast__header">
+          <div class="marine-forecast__title">🔮 Predicción de Viento</div>
+        </div>
+        <div class="marine-forecast__table-wrap">
+          <table class="marine-table">
+            <thead>
+              <tr>
+                <th>Día</th>
+                <th style="text-align: center;">Vel. Máx</th>
+                <th style="text-align: center;">Rachas</th>
+                <th style="text-align: center;">Dirección</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHTML}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
   container.innerHTML = `
     <section class="wind-section" id="wind">
       <h2 class="section-title">💨 Viento</h2>
@@ -337,6 +401,8 @@ function renderWindSection(weather) {
           <canvas id="wind-evolution-chart"></canvas>
         </div>
       </div>
+      
+      ${forecastTableHTML}
     </section>
   `;
   
