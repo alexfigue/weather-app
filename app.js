@@ -10,7 +10,7 @@ const CONFIG = {
   cityName: "L'Ametlla de Mar",
   timezone: 'Europe/Madrid',
   forecastDays: 16,
-  pastDays: 2,
+  pastDays: 3,
   cacheKey: 'weather_cache',
   cacheDuration: 15 * 60 * 1000, // 15 minutes
 };
@@ -165,7 +165,7 @@ function isDaytime(sunrise, sunset) {
 // --- API Calls ---
 async function fetchWeatherData() {
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lon}` +
-    `&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,uv_index,pressure_msl,visibility,dew_point_2m` +
+    `&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,pressure_msl,visibility,dew_point_2m` +
     `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,precipitation_probability_max,wind_speed_10m_max` +
     `&past_days=${CONFIG.pastDays}&forecast_days=${CONFIG.forecastDays}` +
     `&timezone=${CONFIG.timezone}`;
@@ -280,6 +280,178 @@ function getTunaSVG(width = 80) {
     <line x1="78" y1="30" x2="80" y2="34" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
     <line x1="81" y1="29.5" x2="83" y2="33" stroke="#1a5276" stroke-width="1.5" stroke-linecap="round"/>
   </svg>`;
+}
+
+// --- Render Wind Section ---
+function renderWindSection(weather) {
+  const container = document.getElementById('wind-container');
+  if (!container || !weather || !weather.hourly) return;
+  
+  const h = weather.hourly;
+  const now = new Date();
+  
+  // Calculate current KPIs
+  const nowIdx = getCurrentHourIndex(h.time);
+  const currentSpeed = h.wind_speed_10m[nowIdx] != null ? h.wind_speed_10m[nowIdx] : '--';
+  const currentGust = h.wind_gusts_10m[nowIdx] != null ? h.wind_gusts_10m[nowIdx] : currentSpeed;
+  const currentDir = h.wind_direction_10m[nowIdx];
+  const currentDirLabel = currentDir != null ? getWindDirection(currentDir) : '--';
+
+  container.innerHTML = `
+    <section class="wind-section" id="wind">
+      <h2 class="section-title">💨 Viento</h2>
+      
+      <div class="marine-metrics-row" style="margin-bottom: 1.5rem;">
+        <div class="glass-card wave-card">
+          <div class="wave-card__header">
+            <span class="wave-card__icon">💨</span>
+            <span class="wave-card__title">Velocidad</span>
+          </div>
+          <div class="wave-card__value">${currentSpeed}<small>km/h</small></div>
+          <div class="wave-card__details">
+            <span>Media Actual</span>
+          </div>
+        </div>
+        <div class="glass-card wave-card">
+          <div class="wave-card__header">
+            <span class="wave-card__icon">🌪️</span>
+            <span class="wave-card__title">Rachas</span>
+          </div>
+          <div class="wave-card__value">${currentGust}<small>km/h</small></div>
+          <div class="wave-card__details">
+            <span>Máxima Actual</span>
+          </div>
+        </div>
+        <div class="glass-card compass-card">
+          <div class="compass-card__header">🧭 Dirección</div>
+          <div class="compass-card__body">
+            ${renderCompassSVG(currentSpeed, currentDir)}
+          </div>
+          <div class="compass-card__label">${currentDirLabel}</div>
+        </div>
+      </div>
+
+      <div class="glass-card chart-card">
+        <div class="chart-card__title">📊 Historial y Previsión</div>
+        <div class="chart-container">
+          <canvas id="wind-evolution-chart"></canvas>
+        </div>
+      </div>
+    </section>
+  `;
+  
+  const ctx = document.getElementById('wind-evolution-chart');
+  if (!ctx || !window.Chart) return;
+  
+  const futureLimit = new Date();
+  futureLimit.setDate(now.getDate() + 7);
+  
+  const labels = [];
+  const speedData = [];
+  const gustData = [];
+  const dirData = [];
+  
+  for (let i = 0; i < h.time.length; i++) {
+    const t = new Date(h.time[i]);
+    if (t > futureLimit) continue;
+    
+    // Sample every 3 hours for readability
+    if (t.getHours() % 3 === 0) {
+      labels.push(`${t.getDate()}/${t.getMonth() + 1} ${t.getHours()}:00`);
+      speedData.push(h.wind_speed_10m[i]);
+      gustData.push(h.wind_gusts_10m[i] || h.wind_speed_10m[i]); // Fallback just in case
+      dirData.push(h.wind_direction_10m[i]);
+    }
+  }
+  
+  const todayIdx = labels.findIndex(l => {
+    const [d, m] = l.split(' ')[0].split('/');
+    return parseInt(d) === now.getDate() && parseInt(m) === (now.getMonth() + 1);
+  });
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Rachas Máximas (km/h)',
+          data: gustData,
+          borderColor: '#ff6b6b',
+          backgroundColor: 'rgba(255,107,107,0.1)',
+          borderDash: [5, 5],
+          fill: true,
+          tension: 0.4,
+          pointRadius: 2,
+          borderWidth: 1.5
+        },
+        {
+          label: 'Velocidad Media (km/h)',
+          data: speedData,
+          borderColor: '#48cae4',
+          backgroundColor: 'rgba(72,202,228,0.2)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 2,
+          borderWidth: 2
+        }
+      ]
+    },
+    plugins: [{
+      id: 'todayLineWind',
+      beforeDraw(chart) {
+        if (todayIdx < 0) return;
+        const { ctx: c, scales: { x }, chartArea } = chart;
+        const xPos = x.getPixelForValue(todayIdx);
+        c.save(); 
+        c.strokeStyle = 'rgba(0,0,0,0.3)'; 
+        c.lineWidth = 1; 
+        c.setLineDash([4, 4]);
+        c.beginPath(); 
+        c.moveTo(xPos, chartArea.top); 
+        c.lineTo(xPos, chartArea.bottom); 
+        c.stroke(); 
+        c.restore();
+      }
+    }],
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#1a1a2e', font: { family: 'Inter', size: 10 }, usePointStyle: true } },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const idx = context.dataIndex;
+              const dsLabel = context.dataset.label;
+              const val = context.parsed.y;
+              if (context.datasetIndex === 1) { // Velocidad media
+                const dir = getWindDirection(dirData[idx]);
+                return `${dsLabel}: ${val} km/h (Dir: ${dir})`;
+              }
+              return `${dsLabel}: ${val} km/h`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { 
+          ticks: { 
+            color: '#1a1a2e', 
+            font: { size: 9 },
+            maxTicksLimit: 14
+          }, 
+          grid: { color: 'rgba(0,0,0,0.05)' } 
+        },
+        y: { 
+          ticks: { color: '#1a1a2e', font: { size: 9 } }, 
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          title: { display: true, text: 'km/h', color: '#1a1a2e', font: { weight: '600' } },
+          min: 0
+        }
+      }
+    }
+  });
 }
 
 // --- Main render function ---
@@ -453,6 +625,12 @@ function renderApp(data) {
       </button>
     </header>
 
+    <!-- Wind Data Container (rendered below) -->
+    <div id="wind-container"></div>
+
+    <!-- Marine Data (injected by fetchAndRenderMarine) -->
+    <div id="marine-container"></div>
+
     <!-- Current Weather -->
     <section class="current-weather glass-card" id="current-weather">
       <div class="current-weather__icon">${getWeatherIcon(currentCode, isDay, 100)}</div>
@@ -539,14 +717,14 @@ function renderApp(data) {
     <!-- Air Quality -->
     ${airHTML}
 
-    <!-- Marine Data (injected by fetchAndRenderMarine) -->
-    <div id="marine-container"></div>
-
     <!-- Last Updated -->
     <div class="last-updated" id="last-updated">
       Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
     </div>
   `;
+
+  // --- Render Wind Section ---
+  renderWindSection(weather);
 
   // --- Bind refresh button ---
   document.getElementById('btn-refresh').addEventListener('click', () => {
