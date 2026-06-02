@@ -904,13 +904,26 @@ body.daytime {
   transform: scale(0.95);
 }
 
-/* --- Last Updated --- */
+/* --- Last Updated & Updates Container --- */
+.updates-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xl);
+  padding-bottom: var(--space-lg);
+}
+
+.updates-container .last-updated,
+.updates-container .marine-source {
+  margin: 0;
+  padding: 0;
+}
+
 .last-updated {
   text-align: center;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
-  margin-top: var(--space-xl);
-  padding-bottom: var(--space-lg);
 }
 
 /* --- Tab Navigation (for section toggles) --- */
@@ -1264,8 +1277,6 @@ body.daytime {
   text-align: center;
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
-  margin-top: var(--space-md);
-  padding: var(--space-sm) 0;
   letter-spacing: 0.02em;
 }
 

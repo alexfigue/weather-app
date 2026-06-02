@@ -625,6 +625,11 @@ function renderApp(data) {
       </button>
     </header>
 
+    <!-- Updates Top -->
+    <div class="updates-container" id="updates-top">
+      <div class="last-updated">Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
+    </div>
+
     <!-- Wind Data Container (rendered below) -->
     <div id="wind-container"></div>
 
@@ -717,9 +722,9 @@ function renderApp(data) {
     <!-- Air Quality -->
     ${airHTML}
 
-    <!-- Last Updated -->
-    <div class="last-updated" id="last-updated">
-      Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
+    <!-- Updates Bottom -->
+    <div class="updates-container" id="updates-bottom">
+      <div class="last-updated">Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
     </div>
   `;
 
@@ -1208,9 +1213,13 @@ function renderMarineSection(data, waveData) {
       ${bioHTML}
       ${chartsHTML}
       ${forecastHTML}
-      ${sourceHTML}
     </section>
   `;
+
+  const topUpdates = document.getElementById('updates-top');
+  const bottomUpdates = document.getElementById('updates-bottom');
+  if (topUpdates) topUpdates.innerHTML += sourceHTML;
+  if (bottomUpdates) bottomUpdates.innerHTML += sourceHTML;
 
   // ─── POST-RENDER: Charts + Scroll + Tabs ───────────────────
   if (isV2) {
