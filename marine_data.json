@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-  "last_updated": "2026-06-25T00:40:46.207228+00:00",
+  "last_updated": "2026-06-25T07:27:54.249334+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
@@ -17,8 +17,8 @@
     40
   ],
   "period": {
-    "start": "2026-06-21",
-    "end": "2026-06-29"
+    "start": "2026-06-22",
+    "end": "2026-06-30"
   },
   "current": {
     "surface": {},
