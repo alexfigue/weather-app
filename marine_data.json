@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-  "last_updated": "2026-07-20T22:08:27.225043+00:00",
+  "last_updated": "2026-07-21T04:21:34.701509+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
@@ -17,123 +17,68 @@
     40
   ],
   "period": {
-    "start": "2026-07-17",
-    "end": "2026-07-25"
+    "start": "2026-07-18",
+    "end": "2026-07-26"
   },
   "current": {
     "surface": {
-      "temperature": 28.52,
-      "salinity": 38.14,
-      "current_speed": 0.092,
-      "current_direction": 167.5,
-      "current_direction_label": "S",
-      "oxygen": 207.9,
+      "temperature": 27.5,
+      "salinity": 38.16,
+      "current_speed": 0.051,
+      "current_direction": 101.3,
+      "current_direction_label": "E",
+      "oxygen": 207.08,
       "chlorophyll": 0.03,
-      "nitrate": 0.68,
+      "nitrate": 0.55,
       "phosphate": 0.02
     },
     "10m": {
-      "temperature": 27.92,
-      "salinity": 38.12,
-      "current_speed": 0.032,
-      "current_direction": 251.6,
-      "current_direction_label": "O",
-      "oxygen": 207.91,
+      "temperature": 27.25,
+      "salinity": 38.14,
+      "current_speed": 0.0,
+      "current_direction": 180.0,
+      "current_direction_label": "S",
+      "oxygen": 207.09,
       "chlorophyll": 0.03,
-      "nitrate": 0.68,
+      "nitrate": 0.55,
       "phosphate": 0.02
     },
     "20m": {
-      "temperature": 25.13,
+      "temperature": 24.22,
       "salinity": 38.04,
-      "current_speed": 0.03,
-      "current_direction": 0.0,
-      "current_direction_label": "N",
-      "oxygen": 210.82,
+      "current_speed": 0.032,
+      "current_direction": 288.4,
+      "current_direction_label": "O",
+      "oxygen": 209.55,
       "chlorophyll": 0.04,
-      "nitrate": 0.34,
+      "nitrate": 0.36,
       "phosphate": 0.01
     },
     "30m": {
-      "temperature": 21.05,
-      "salinity": 38.01,
-      "current_speed": 0.01,
-      "current_direction": 270.0,
-      "current_direction_label": "O",
-      "oxygen": 230.04,
+      "temperature": 20.2,
+      "salinity": 38.02,
+      "current_speed": 0.028,
+      "current_direction": 225.0,
+      "current_direction_label": "SO",
+      "oxygen": 228.7,
       "chlorophyll": 0.04,
       "nitrate": 0.01,
       "phosphate": 0.01
     },
     "40m": {
-      "temperature": 18.46,
-      "salinity": 38.04,
-      "current_speed": 0.014,
-      "current_direction": 225.0,
-      "current_direction_label": "SO",
-      "oxygen": 241.55,
-      "chlorophyll": 0.07,
+      "temperature": 18.38,
+      "salinity": 38.05,
+      "current_speed": 0.03,
+      "current_direction": 180.0,
+      "current_direction_label": "S",
+      "oxygen": 239.94,
+      "chlorophyll": 0.06,
       "nitrate": 0.0,
       "phosphate": 0.01
     }
   },
-  "mixed_layer_depth": 12.04,
+  "mixed_layer_depth": 12.99,
   "daily": [
-    {
-      "date": "2026-07-17",
-      "is_forecast": false,
-      "surface": {
-        "temperature": 28.07,
-        "salinity": 38.17,
-        "current_speed": 0.07,
-        "current_direction": 0.0,
-        "oxygen": 213.64,
-        "chlorophyll": 0.03,
-        "nitrate": 0.04,
-        "phosphate": 0.01
-      },
-      "10m": {
-        "temperature": 27.15,
-        "salinity": 38.12,
-        "current_speed": 0.041,
-        "current_direction": 14.0,
-        "oxygen": 213.65,
-        "chlorophyll": 0.03,
-        "nitrate": 0.04,
-        "phosphate": 0.01
-      },
-      "20m": {
-        "temperature": 24.62,
-        "salinity": 38.02,
-        "current_speed": 0.06,
-        "current_direction": 0.0,
-        "oxygen": 221.95,
-        "chlorophyll": 0.04,
-        "nitrate": 0.0,
-        "phosphate": 0.01
-      },
-      "30m": {
-        "temperature": 20.74,
-        "salinity": 37.99,
-        "current_speed": 0.061,
-        "current_direction": 350.5,
-        "oxygen": 233.74,
-        "chlorophyll": 0.05,
-        "nitrate": 0.0,
-        "phosphate": 0.01
-      },
-      "40m": {
-        "temperature": 17.99,
-        "salinity": 38.04,
-        "current_speed": 0.014,
-        "current_direction": 315.0,
-        "oxygen": 249.02,
-        "chlorophyll": 0.1,
-        "nitrate": 0.0,
-        "phosphate": 0.01
-      },
-      "mixed_layer_depth": 11.77
-    },
     {
       "date": "2026-07-18",
       "is_forecast": false,
@@ -301,7 +246,7 @@
     },
     {
       "date": "2026-07-21",
-      "is_forecast": true,
+      "is_forecast": false,
       "surface": {
         "temperature": 28.62,
         "salinity": 37.93,
@@ -573,6 +518,61 @@
         "phosphate": 0.01
       },
       "mixed_layer_depth": 12.04
+    },
+    {
+      "date": "2026-07-26",
+      "is_forecast": true,
+      "surface": {
+        "temperature": 27.5,
+        "salinity": 38.16,
+        "current_speed": 0.051,
+        "current_direction": 101.3,
+        "oxygen": 207.08,
+        "chlorophyll": 0.03,
+        "nitrate": 0.55,
+        "phosphate": 0.02
+      },
+      "10m": {
+        "temperature": 27.25,
+        "salinity": 38.14,
+        "current_speed": 0.0,
+        "current_direction": 180.0,
+        "oxygen": 207.09,
+        "chlorophyll": 0.03,
+        "nitrate": 0.55,
+        "phosphate": 0.02
+      },
+      "20m": {
+        "temperature": 24.22,
+        "salinity": 38.04,
+        "current_speed": 0.032,
+        "current_direction": 288.4,
+        "oxygen": 209.55,
+        "chlorophyll": 0.04,
+        "nitrate": 0.36,
+        "phosphate": 0.01
+      },
+      "30m": {
+        "temperature": 20.2,
+        "salinity": 38.02,
+        "current_speed": 0.028,
+        "current_direction": 225.0,
+        "oxygen": 228.7,
+        "chlorophyll": 0.04,
+        "nitrate": 0.01,
+        "phosphate": 0.01
+      },
+      "40m": {
+        "temperature": 18.38,
+        "salinity": 38.05,
+        "current_speed": 0.03,
+        "current_direction": 180.0,
+        "oxygen": 239.94,
+        "chlorophyll": 0.06,
+        "nitrate": 0.0,
+        "phosphate": 0.01
+      },
+      "mixed_layer_depth": 12.99
     }
   ],
   "units": {
