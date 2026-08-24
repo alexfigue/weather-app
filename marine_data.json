@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-  "last_updated": "2026-08-24T07:13:31.436537+00:00",
+  "last_updated": "2026-08-24T11:37:02.805154+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
@@ -23,7 +23,7 @@
   "current": {
     "surface": {
       "temperature": 27.07,
-      "salinity": 38.14,
+      "salinity": 38.1,
       "current_speed": 0.041,
       "current_direction": 14.0,
       "current_direction_label": "N",
@@ -34,7 +34,7 @@
     },
     "10m": {
       "temperature": 26.95,
-      "salinity": 38.14,
+      "salinity": 38.09,
       "current_speed": 0.022,
       "current_direction": 26.6,
       "current_direction_label": "NE",
@@ -45,7 +45,7 @@
     },
     "20m": {
       "temperature": 25.36,
-      "salinity": 38.09,
+      "salinity": 38.02,
       "current_speed": 0.03,
       "current_direction": 0.0,
       "current_direction_label": "N",
@@ -67,7 +67,7 @@
     },
     "40m": {
       "temperature": 18.43,
-      "salinity": 38.03,
+      "salinity": 38.05,
       "current_speed": 0.022,
       "current_direction": 243.4,
       "current_direction_label": "SO",
@@ -84,7 +84,7 @@
       "is_forecast": false,
       "surface": {
         "temperature": 28.18,
-        "salinity": 38.0,
+        "salinity": 38.04,
         "current_speed": 0.028,
         "current_direction": 135.0,
         "oxygen": 212.82,
@@ -94,7 +94,7 @@
       },
       "10m": {
         "temperature": 26.19,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.041,
         "current_direction": 14.0,
         "oxygen": 212.93,
@@ -104,7 +104,7 @@
       },
       "20m": {
         "temperature": 21.9,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.014,
         "current_direction": 315.0,
         "oxygen": 239.06,
@@ -124,7 +124,7 @@
       },
       "40m": {
         "temperature": 17.32,
-        "salinity": 38.08,
+        "salinity": 38.09,
         "current_speed": 0.014,
         "current_direction": 225.0,
         "oxygen": 250.0,
@@ -139,7 +139,7 @@
       "is_forecast": false,
       "surface": {
         "temperature": 27.68,
-        "salinity": 38.01,
+        "salinity": 37.9,
         "current_speed": 0.058,
         "current_direction": 329.0,
         "oxygen": 212.05,
@@ -149,7 +149,7 @@
       },
       "10m": {
         "temperature": 26.49,
-        "salinity": 38.03,
+        "salinity": 38.02,
         "current_speed": 0.02,
         "current_direction": 180.0,
         "oxygen": 212.07,
@@ -159,7 +159,7 @@
       },
       "20m": {
         "temperature": 22.09,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.014,
         "current_direction": 135.0,
         "oxygen": 234.68,
@@ -169,7 +169,7 @@
       },
       "30m": {
         "temperature": 19.06,
-        "salinity": 38.03,
+        "salinity": 38.04,
         "current_speed": 0.022,
         "current_direction": 153.4,
         "oxygen": 243.37,
@@ -179,7 +179,7 @@
       },
       "40m": {
         "temperature": 17.26,
-        "salinity": 38.07,
+        "salinity": 38.09,
         "current_speed": 0.014,
         "current_direction": 135.0,
         "oxygen": 249.56,
@@ -194,7 +194,7 @@
       "is_forecast": false,
       "surface": {
         "temperature": 27.57,
-        "salinity": 38.11,
+        "salinity": 37.91,
         "current_speed": 0.063,
         "current_direction": 198.4,
         "oxygen": 211.65,
@@ -204,7 +204,7 @@
       },
       "10m": {
         "temperature": 27.15,
-        "salinity": 38.09,
+        "salinity": 37.99,
         "current_speed": 0.108,
         "current_direction": 201.8,
         "oxygen": 211.66,
@@ -214,7 +214,7 @@
       },
       "20m": {
         "temperature": 24.37,
-        "salinity": 38.05,
+        "salinity": 38.01,
         "current_speed": 0.1,
         "current_direction": 180.0,
         "oxygen": 217.82,
@@ -234,7 +234,7 @@
       },
       "40m": {
         "temperature": 18.38,
-        "salinity": 38.03,
+        "salinity": 38.06,
         "current_speed": 0.041,
         "current_direction": 104.0,
         "oxygen": 245.55,
@@ -249,7 +249,7 @@
       "is_forecast": false,
       "surface": {
         "temperature": 27.63,
-        "salinity": 38.14,
+        "salinity": 37.97,
         "current_speed": 0.022,
         "current_direction": 153.4,
         "oxygen": 211.15,
@@ -259,7 +259,7 @@
       },
       "10m": {
         "temperature": 27.17,
-        "salinity": 38.13,
+        "salinity": 37.99,
         "current_speed": 0.071,
         "current_direction": 188.1,
         "oxygen": 211.15,
@@ -269,7 +269,7 @@
       },
       "20m": {
         "temperature": 24.94,
-        "salinity": 38.09,
+        "salinity": 38.01,
         "current_speed": 0.05,
         "current_direction": 180.0,
         "oxygen": 213.3,
@@ -279,7 +279,7 @@
       },
       "30m": {
         "temperature": 21.78,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.041,
         "current_direction": 194.0,
         "oxygen": 234.28,
@@ -289,7 +289,7 @@
       },
       "40m": {
         "temperature": 19.16,
-        "salinity": 38.03,
+        "salinity": 38.04,
         "current_speed": 0.022,
         "current_direction": 243.4,
         "oxygen": 243.98,
@@ -304,7 +304,7 @@
       "is_forecast": true,
       "surface": {
         "temperature": 27.69,
-        "salinity": 38.13,
+        "salinity": 37.99,
         "current_speed": 0.03,
         "current_direction": 270.0,
         "oxygen": 210.54,
@@ -314,7 +314,7 @@
       },
       "10m": {
         "temperature": 27.2,
-        "salinity": 38.12,
+        "salinity": 38.01,
         "current_speed": 0.01,
         "current_direction": 90.0,
         "oxygen": 210.55,
@@ -324,7 +324,7 @@
       },
       "20m": {
         "temperature": 24.48,
-        "salinity": 38.07,
+        "salinity": 38.01,
         "current_speed": 0.014,
         "current_direction": 45.0,
         "oxygen": 216.62,
@@ -334,7 +334,7 @@
       },
       "30m": {
         "temperature": 20.7,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.0,
         "current_direction": 0.0,
         "oxygen": 238.73,
@@ -344,7 +344,7 @@
       },
       "40m": {
         "temperature": 18.64,
-        "salinity": 38.04,
+        "salinity": 38.05,
         "current_speed": 0.01,
         "current_direction": 270.0,
         "oxygen": 246.02,
@@ -359,7 +359,7 @@
       "is_forecast": true,
       "surface": {
         "temperature": 27.64,
-        "salinity": 38.13,
+        "salinity": 37.97,
         "current_speed": 0.036,
         "current_direction": 303.7,
         "oxygen": 210.07,
@@ -369,7 +369,7 @@
       },
       "10m": {
         "temperature": 27.39,
-        "salinity": 38.12,
+        "salinity": 38.01,
         "current_speed": 0.0,
         "current_direction": 180.0,
         "oxygen": 210.08,
@@ -379,7 +379,7 @@
       },
       "20m": {
         "temperature": 24.74,
-        "salinity": 38.06,
+        "salinity": 38.01,
         "current_speed": 0.014,
         "current_direction": 135.0,
         "oxygen": 215.43,
@@ -389,7 +389,7 @@
       },
       "30m": {
         "temperature": 20.7,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.01,
         "current_direction": 90.0,
         "oxygen": 238.69,
@@ -399,7 +399,7 @@
       },
       "40m": {
         "temperature": 18.41,
-        "salinity": 38.04,
+        "salinity": 38.06,
         "current_speed": 0.01,
         "current_direction": 90.0,
         "oxygen": 246.52,
@@ -414,7 +414,7 @@
       "is_forecast": true,
       "surface": {
         "temperature": 27.68,
-        "salinity": 38.11,
+        "salinity": 37.98,
         "current_speed": 0.05,
         "current_direction": 216.9,
         "oxygen": 209.23,
@@ -424,7 +424,7 @@
       },
       "10m": {
         "temperature": 27.46,
-        "salinity": 38.12,
+        "salinity": 38.01,
         "current_speed": 0.041,
         "current_direction": 194.0,
         "oxygen": 209.24,
@@ -434,7 +434,7 @@
       },
       "20m": {
         "temperature": 25.4,
-        "salinity": 38.09,
+        "salinity": 38.01,
         "current_speed": 0.03,
         "current_direction": 180.0,
         "oxygen": 211.7,
@@ -444,7 +444,7 @@
       },
       "30m": {
         "temperature": 21.39,
-        "salinity": 38.02,
+        "salinity": 38.01,
         "current_speed": 0.014,
         "current_direction": 135.0,
         "oxygen": 235.86,
@@ -454,7 +454,7 @@
       },
       "40m": {
         "temperature": 18.56,
-        "salinity": 38.04,
+        "salinity": 38.05,
         "current_speed": 0.01,
         "current_direction": 90.0,
         "oxygen": 245.9,
@@ -469,7 +469,7 @@
       "is_forecast": true,
       "surface": {
         "temperature": 27.25,
-        "salinity": 38.13,
+        "salinity": 38.06,
         "current_speed": 0.071,
         "current_direction": 188.1,
         "oxygen": 207.5,
@@ -479,7 +479,7 @@
       },
       "10m": {
         "temperature": 27.25,
-        "salinity": 38.13,
+        "salinity": 38.07,
         "current_speed": 0.071,
         "current_direction": 188.1,
         "oxygen": 207.51,
@@ -489,7 +489,7 @@
       },
       "20m": {
         "temperature": 26.27,
-        "salinity": 38.11,
+        "salinity": 38.03,
         "current_speed": 0.014,
         "current_direction": 135.0,
         "oxygen": 208.26,
@@ -499,7 +499,7 @@
       },
       "30m": {
         "temperature": 22.48,
-        "salinity": 38.03,
+        "salinity": 38.01,
         "current_speed": 0.01,
         "current_direction": 180.0,
         "oxygen": 230.99,
@@ -509,7 +509,7 @@
       },
       "40m": {
         "temperature": 18.93,
-        "salinity": 38.03,
+        "salinity": 38.04,
         "current_speed": 0.01,
         "current_direction": 0.0,
         "oxygen": 244.74,
@@ -524,7 +524,7 @@
       "is_forecast": true,
       "surface": {
         "temperature": 27.07,
-        "salinity": 38.14,
+        "salinity": 38.1,
         "current_speed": 0.041,
         "current_direction": 14.0,
         "oxygen": 206.86,
@@ -534,7 +534,7 @@
       },
       "10m": {
         "temperature": 26.95,
-        "salinity": 38.14,
+        "salinity": 38.09,
         "current_speed": 0.022,
         "current_direction": 26.6,
         "oxygen": 206.87,
@@ -544,7 +544,7 @@
       },
       "20m": {
         "temperature": 25.36,
-        "salinity": 38.09,
+        "salinity": 38.02,
         "current_speed": 0.03,
         "current_direction": 0.0,
         "oxygen": 211.23,
@@ -564,7 +564,7 @@
       },
       "40m": {
         "temperature": 18.43,
-        "salinity": 38.03,
+        "salinity": 38.05,
         "current_speed": 0.022,
         "current_direction": 243.4,
         "oxygen": 246.78,
