@@ -1,7 +1,7 @@
 {
   "status": "ok",
   "version": 2,
-  "last_updated": "2026-10-11T07:00:16.099318+00:00",
+  "last_updated": "2026-10-11T16:37:29.258704+00:00",
   "location": {
     "name": "L'Ametlla de Mar - Zona Gàbies",
     "min_lat": 40.8,
@@ -27,9 +27,9 @@
       "current_speed": 0.01,
       "current_direction": 0.0,
       "current_direction_label": "N",
-      "oxygen": 209.86,
+      "oxygen": 209.58,
       "chlorophyll": 0.05,
-      "nitrate": 0.13,
+      "nitrate": 0.19,
       "phosphate": 0.01
     },
     "10m": {
@@ -38,9 +38,9 @@
       "current_speed": 0.0,
       "current_direction": 180.0,
       "current_direction_label": "S",
-      "oxygen": 209.86,
+      "oxygen": 209.58,
       "chlorophyll": 0.05,
-      "nitrate": 0.13,
+      "nitrate": 0.19,
       "phosphate": 0.01
     },
     "20m": {
@@ -49,9 +49,9 @@
       "current_speed": 0.01,
       "current_direction": 180.0,
       "current_direction_label": "S",
-      "oxygen": 209.88,
+      "oxygen": 209.81,
       "chlorophyll": 0.05,
-      "nitrate": 0.13,
+      "nitrate": 0.15,
       "phosphate": 0.01
     },
     "30m": {
@@ -60,9 +60,9 @@
       "current_speed": 0.02,
       "current_direction": 180.0,
       "current_direction_label": "S",
-      "oxygen": 225.83,
-      "chlorophyll": 0.06,
-      "nitrate": 0.03,
+      "oxygen": 230.11,
+      "chlorophyll": 0.07,
+      "nitrate": 0.02,
       "phosphate": 0.01
     },
     "40m": {
@@ -71,8 +71,8 @@
       "current_speed": 0.01,
       "current_direction": 90.0,
       "current_direction_label": "E",
-      "oxygen": 247.92,
-      "chlorophyll": 0.1,
+      "oxygen": 248.47,
+      "chlorophyll": 0.11,
       "nitrate": 0.0,
       "phosphate": 0.01
     }
@@ -197,7 +197,7 @@
         "salinity": 37.78,
         "current_speed": 0.143,
         "current_direction": 192.1,
-        "oxygen": 212.69,
+        "oxygen": 212.66,
         "chlorophyll": 0.06,
         "nitrate": 0.23,
         "phosphate": 0.01
@@ -207,7 +207,7 @@
         "salinity": 37.78,
         "current_speed": 0.143,
         "current_direction": 192.1,
-        "oxygen": 212.69,
+        "oxygen": 212.66,
         "chlorophyll": 0.06,
         "nitrate": 0.23,
         "phosphate": 0.01
@@ -217,9 +217,9 @@
         "salinity": 37.81,
         "current_speed": 0.114,
         "current_direction": 195.3,
-        "oxygen": 213.18,
+        "oxygen": 213.55,
         "chlorophyll": 0.06,
-        "nitrate": 0.22,
+        "nitrate": 0.21,
         "phosphate": 0.01
       },
       "30m": {
@@ -227,7 +227,7 @@
         "salinity": 37.88,
         "current_speed": 0.117,
         "current_direction": 160.0,
-        "oxygen": 225.87,
+        "oxygen": 224.96,
         "chlorophyll": 0.07,
         "nitrate": 0.12,
         "phosphate": 0.01
@@ -237,8 +237,8 @@
         "salinity": 37.97,
         "current_speed": 0.071,
         "current_direction": 135.0,
-        "oxygen": 243.01,
-        "chlorophyll": 0.11,
+        "oxygen": 242.4,
+        "chlorophyll": 0.1,
         "nitrate": 0.04,
         "phosphate": 0.01
       },
@@ -252,7 +252,7 @@
         "salinity": 37.79,
         "current_speed": 0.05,
         "current_direction": 216.9,
-        "oxygen": 210.78,
+        "oxygen": 210.79,
         "chlorophyll": 0.06,
         "nitrate": 0.12,
         "phosphate": 0.01
@@ -262,7 +262,7 @@
         "salinity": 37.79,
         "current_speed": 0.045,
         "current_direction": 206.6,
-        "oxygen": 210.78,
+        "oxygen": 210.79,
         "chlorophyll": 0.06,
         "nitrate": 0.12,
         "phosphate": 0.01
@@ -272,9 +272,9 @@
         "salinity": 37.8,
         "current_speed": 0.05,
         "current_direction": 180.0,
-        "oxygen": 212.64,
+        "oxygen": 212.84,
         "chlorophyll": 0.06,
-        "nitrate": 0.12,
+        "nitrate": 0.11,
         "phosphate": 0.01
       },
       "30m": {
@@ -282,9 +282,9 @@
         "salinity": 37.82,
         "current_speed": 0.098,
         "current_direction": 156.0,
-        "oxygen": 221.72,
+        "oxygen": 224.09,
         "chlorophyll": 0.06,
-        "nitrate": 0.09,
+        "nitrate": 0.08,
         "phosphate": 0.01
       },
       "40m": {
@@ -292,9 +292,9 @@
         "salinity": 37.93,
         "current_speed": 0.0,
         "current_direction": 0.0,
-        "oxygen": 242.47,
+        "oxygen": 242.86,
         "chlorophyll": 0.08,
-        "nitrate": 0.03,
+        "nitrate": 0.02,
         "phosphate": 0.01
       },
       "mixed_layer_depth": 16.16
@@ -307,9 +307,9 @@
         "salinity": 37.8,
         "current_speed": 0.02,
         "current_direction": 0.0,
-        "oxygen": 210.12,
-        "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "oxygen": 210.19,
+        "chlorophyll": 0.06,
+        "nitrate": 0.1,
         "phosphate": 0.01
       },
       "10m": {
@@ -317,9 +317,9 @@
         "salinity": 37.8,
         "current_speed": 0.02,
         "current_direction": 0.0,
-        "oxygen": 210.12,
-        "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "oxygen": 210.19,
+        "chlorophyll": 0.06,
+        "nitrate": 0.1,
         "phosphate": 0.01
       },
       "20m": {
@@ -327,7 +327,7 @@
         "salinity": 37.8,
         "current_speed": 0.01,
         "current_direction": 90.0,
-        "oxygen": 211.93,
+        "oxygen": 212.08,
         "chlorophyll": 0.06,
         "nitrate": 0.1,
         "phosphate": 0.01
@@ -337,9 +337,9 @@
         "salinity": 37.85,
         "current_speed": 0.0,
         "current_direction": 0.0,
-        "oxygen": 230.71,
+        "oxygen": 233.17,
         "chlorophyll": 0.07,
-        "nitrate": 0.05,
+        "nitrate": 0.04,
         "phosphate": 0.01
       },
       "40m": {
@@ -347,7 +347,7 @@
         "salinity": 37.96,
         "current_speed": 0.01,
         "current_direction": 270.0,
-        "oxygen": 247.41,
+        "oxygen": 247.79,
         "chlorophyll": 0.1,
         "nitrate": 0.01,
         "phosphate": 0.01
@@ -362,9 +362,9 @@
         "salinity": 37.82,
         "current_speed": 0.028,
         "current_direction": 315.0,
-        "oxygen": 209.98,
+        "oxygen": 209.94,
         "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "nitrate": 0.12,
         "phosphate": 0.01
       },
       "10m": {
@@ -372,9 +372,9 @@
         "salinity": 37.81,
         "current_speed": 0.01,
         "current_direction": 0.0,
-        "oxygen": 209.98,
+        "oxygen": 209.94,
         "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "nitrate": 0.12,
         "phosphate": 0.01
       },
       "20m": {
@@ -382,7 +382,7 @@
         "salinity": 37.8,
         "current_speed": 0.014,
         "current_direction": 135.0,
-        "oxygen": 210.64,
+        "oxygen": 210.89,
         "chlorophyll": 0.05,
         "nitrate": 0.09,
         "phosphate": 0.01
@@ -392,9 +392,9 @@
         "salinity": 37.85,
         "current_speed": 0.014,
         "current_direction": 135.0,
-        "oxygen": 229.69,
+        "oxygen": 234.17,
         "chlorophyll": 0.07,
-        "nitrate": 0.04,
+        "nitrate": 0.03,
         "phosphate": 0.01
       },
       "40m": {
@@ -402,8 +402,8 @@
         "salinity": 37.96,
         "current_speed": 0.014,
         "current_direction": 45.0,
-        "oxygen": 247.87,
-        "chlorophyll": 0.1,
+        "oxygen": 248.59,
+        "chlorophyll": 0.11,
         "nitrate": 0.01,
         "phosphate": 0.01
       },
@@ -417,9 +417,9 @@
         "salinity": 37.82,
         "current_speed": 0.02,
         "current_direction": 0.0,
-        "oxygen": 209.87,
+        "oxygen": 209.7,
         "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "nitrate": 0.16,
         "phosphate": 0.01
       },
       "10m": {
@@ -427,9 +427,9 @@
         "salinity": 37.81,
         "current_speed": 0.02,
         "current_direction": 0.0,
-        "oxygen": 209.87,
+        "oxygen": 209.7,
         "chlorophyll": 0.05,
-        "nitrate": 0.09,
+        "nitrate": 0.16,
         "phosphate": 0.01
       },
       "20m": {
@@ -437,7 +437,7 @@
         "salinity": 37.8,
         "current_speed": 0.01,
         "current_direction": 0.0,
-        "oxygen": 210.01,
+        "oxygen": 210.19,
         "chlorophyll": 0.05,
         "nitrate": 0.08,
         "phosphate": 0.01
@@ -447,9 +447,9 @@
         "salinity": 37.84,
         "current_speed": 0.0,
         "current_direction": 0.0,
-        "oxygen": 228.72,
+        "oxygen": 233.86,
         "chlorophyll": 0.07,
-        "nitrate": 0.03,
+        "nitrate": 0.02,
         "phosphate": 0.01
       },
       "40m": {
@@ -457,8 +457,8 @@
         "salinity": 37.96,
         "current_speed": 0.01,
         "current_direction": 270.0,
-        "oxygen": 248.32,
-        "chlorophyll": 0.1,
+        "oxygen": 249.02,
+        "chlorophyll": 0.11,
         "nitrate": 0.01,
         "phosphate": 0.01
       },
@@ -472,9 +472,9 @@
         "salinity": 37.82,
         "current_speed": 0.03,
         "current_direction": 0.0,
-        "oxygen": 209.9,
-        "chlorophyll": 0.05,
-        "nitrate": 0.12,
+        "oxygen": 209.68,
+        "chlorophyll": 0.06,
+        "nitrate": 0.2,
         "phosphate": 0.01
       },
       "10m": {
@@ -482,9 +482,9 @@
         "salinity": 37.82,
         "current_speed": 0.02,
         "current_direction": 0.0,
-        "oxygen": 209.9,
-        "chlorophyll": 0.05,
-        "nitrate": 0.12,
+        "oxygen": 209.68,
+        "chlorophyll": 0.06,
+        "nitrate": 0.2,
         "phosphate": 0.01
       },
       "20m": {
@@ -492,9 +492,9 @@
         "salinity": 37.81,
         "current_speed": 0.01,
         "current_direction": 0.0,
-        "oxygen": 209.96,
+        "oxygen": 210.41,
         "chlorophyll": 0.05,
-        "nitrate": 0.11,
+        "nitrate": 0.1,
         "phosphate": 0.01
       },
       "30m": {
@@ -502,9 +502,9 @@
         "salinity": 37.85,
         "current_speed": 0.01,
         "current_direction": 0.0,
-        "oxygen": 230.38,
+        "oxygen": 235.44,
         "chlorophyll": 0.07,
-        "nitrate": 0.03,
+        "nitrate": 0.02,
         "phosphate": 0.01
       },
       "40m": {
@@ -512,10 +512,10 @@
         "salinity": 37.97,
         "current_speed": 0.0,
         "current_direction": 180.0,
-        "oxygen": 248.75,
-        "chlorophyll": 0.11,
-        "nitrate": 0.0,
-        "phosphate": 0.01
+        "oxygen": 249.45,
+        "chlorophyll": 0.12,
+        "nitrate": 0.01,
+        "phosphate": 0.02
       },
       "mixed_layer_depth": 21.18
     },
@@ -527,9 +527,9 @@
         "salinity": 37.82,
         "current_speed": 0.01,
         "current_direction": 0.0,
-        "oxygen": 209.86,
+        "oxygen": 209.58,
         "chlorophyll": 0.05,
-        "nitrate": 0.13,
+        "nitrate": 0.19,
         "phosphate": 0.01
       },
       "10m": {
@@ -537,9 +537,9 @@
         "salinity": 37.82,
         "current_speed": 0.0,
         "current_direction": 180.0,
-        "oxygen": 209.86,
+        "oxygen": 209.58,
         "chlorophyll": 0.05,
-        "nitrate": 0.13,
+        "nitrate": 0.19,
         "phosphate": 0.01
       },
       "20m": {
@@ -547,9 +547,9 @@
         "salinity": 37.81,
         "current_speed": 0.01,
         "current_direction": 180.0,
-        "oxygen": 209.88,
+        "oxygen": 209.81,
         "chlorophyll": 0.05,
-        "nitrate": 0.13,
+        "nitrate": 0.15,
         "phosphate": 0.01
       },
       "30m": {
@@ -557,9 +557,9 @@
         "salinity": 37.84,
         "current_speed": 0.02,
         "current_direction": 180.0,
-        "oxygen": 225.83,
-        "chlorophyll": 0.06,
-        "nitrate": 0.03,
+        "oxygen": 230.11,
+        "chlorophyll": 0.07,
+        "nitrate": 0.02,
         "phosphate": 0.01
       },
       "40m": {
@@ -567,8 +567,8 @@
         "salinity": 37.96,
         "current_speed": 0.01,
         "current_direction": 90.0,
-        "oxygen": 247.92,
-        "chlorophyll": 0.1,
+        "oxygen": 248.47,
+        "chlorophyll": 0.11,
         "nitrate": 0.0,
         "phosphate": 0.01
       },
